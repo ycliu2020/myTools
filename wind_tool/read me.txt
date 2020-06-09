@@ -1,0 +1,14 @@
+来源：http://bbs.06climate.com/forum.php?mod=viewthread&tid=37696&extra=&highlight=%B7%E7%B3%A1&page=1
+其中的legend_wb，legend_vc，m_legendvc均是为风场添加标签（legend）的，其中legend_wb是给windbarb添加标签的（如图1，windbarb可以用m_windbarb，windbarbm等函数来画来画，参考帖子：http://bbs.06climate.com/forum.php?mod=viewthread&tid=37283）。legend_vc和m_legendvc均是给quiver添加标签的（如图2），前者适合普通坐标，后者用于m_map工具包绘图，基本技术是根据帖子：http://bbs.06climate.com/forum.p ... 1699&extra=page%3D7 的内容改写的（我基本上算搬运工）。用法：
+[h1,h2,h3,h4]=legend_wb(pos);
+[ h1,h2,h3]=legend_vc( pos,x,y,u,v,scl,std );
+[ h1,h2,h3]=m_legendvc( pos,x,y,u,v,scl,std );
+pos控制legend的位置，具体用法跟subplot的‘position’相同，0~1的[left bottom width height]。当然有内置了6个位置可以使用：
+'northeast','northwest',’southwest','southeast'分别对应坐标轴内的4个角，‘rightshoulder’和‘rightfoot’对应坐标轴外的右肩处和右脚处。
+x,y,u,v一定要与画quiver时用的x,y,u,v完全一样，scl为画quiver时的scale值，若没专门设置，scl取为1。
+std为标签quiver的标准值（比如图1的10，图2的500）。
+h1~h4为返回的句柄，后期设置用。
+其中h1为小框的坐标轴的句柄；
+wb的h2~h3均为直线（line）的句柄，控制标签的windbarb；
+其它的h2为quiver的句柄和直线line相似，控制标签的quiver；
+wb的h4和其它的h3为文字（text）句柄，控制标签下面的文字

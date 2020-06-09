@@ -1,0 +1,42 @@
+show_syms.m  显示所有希腊符号以及代码
+save_png.m  保存为高质量png
+
+安装：install
+mycolor.m 颜色配色相关
+R95p.m  算极端降水95百分位的程序
+R99p.m  算极端降水99百分位的程序
+daycal.m  已知月份计算天数(不考虑闰年）
+daycalpro.m 已知月份计算天数(考虑闰年）
+mktrend.m  m-k趋势检验
+dividedata.m  年资料分解123季度的函数
+rlatlon.m  加载经纬度的函数（read lat and lon）
+
+subplot_yih.m     %此为matlab自动调整合适边界的程序
+tight_subplot.m  %此为matlab控制图像的边界（margin），subplot的间距（gap）的程序
+
+colorbargap.m %此为不等距颜色棒的画法示示例程序
+
+contourfnu.m  此函数允许在不均匀的级别标线上均匀的颜色棒（适用于contourf/imagesc/pcolor.）不适用于拉近画局部地图
+maskmap  %  对所绘制图形进行白化
+plotc.m  %画带有colorbar的散点图
+plotclr.m %改进的plotc.m
+Get_Autoscale.m %自动获取风场图的风矢量标签
+add_all.m  添加所有路径,以及地图目录
+auto_draw_1.m  自动画Ts子图
+div_months文件夹 提取并划分季度数据 h0单变量提取数据函数
+
+Vector_Cal_Atmos工具箱(求矢量地理数据)：
+dvh=advh_atmos(longitude, latitude, u, v, T); % Horizontal Advection
+curlz=curlz_atmos(longitude, latitude, u, v); % (Relative) Vorticity in vertical direction
+divh=divh_atmos(longitude, latitude, u, v); % Horizontal Divergence
+[grad_x, grad_y]=grad_atmos(longitude, latitude, u, v); % Gradient
+[Ugh, Vgh]=geostrophic_wind(longitude, latitude, H); % Geostrophic Wind
+
+netCDF_tools  读取和处理nc文件的工具箱
+cdfdate2num.m   方便的转换net_CDF日期为matlab标准日期的函数
+
+altmany-export_fig   保存高质量图片工具
+netcdfobj  netcdf增强包
+eg: [time,timezone]=cdfdate2num(units,calendar,time) 转换时间
+
+testTime  检验matlab转换nc文件的时间正确与否
