@@ -1,3 +1,12 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-06-24 15:20:40
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/netCDF_tool/netcdfTimeTool/cdfdate2num.m
+%  
+%%---------------------------------------------------------
 function [time,timezone]=cdfdate2num(units,calendar,time)
 % Convert netcdf times to datenums
 %

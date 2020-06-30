@@ -1,8 +1,16 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-06-15 09:48:46
+% LastEditors  : LYC
+% Description  : this function caled variety trendMon from 1-12 month
+% FilePath     : /Research/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/detrend_yc.m
+%  
+%%---------------------------------------------------------
 % improved by liuyincheng, thanks to xieyan's source code
-% attention: this function caled variety trendMon from 1-12 month
 function [varb_detrend, trendMon_startJan, cons, pvalue] = detrend_yc(varb,time,startmonth)
 % varb:data need to detrend
-% time:time serise
+% time:time serise (attention:matlab time or nc time unit is per day! if time like monthtime=1:12, trend unit is per month)
 % varb:(ntime,1) anomaly data
 % startmonth: the start month
 % mon2: the end month

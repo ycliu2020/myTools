@@ -1,3 +1,12 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-06-30 10:28:58
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/modelParameters.m
+%  
+%%---------------------------------------------------------
 function [readme, Experiment, level, tLin, mPlev, vars] = modelParameters(p_1)
     % By liuyincheng (ycliu@smail.nju.edu.cn)
     % purpose: auto output model's parameters, so we only need to modify once if something change.
@@ -16,35 +25,35 @@ function [readme, Experiment, level, tLin, mPlev, vars] = modelParameters(p_1)
     readme.time_note = 'data is monthly mean if no special illustration. time vars standard: days since 0001-01-01 00:00:00, already use matlab transform';
     readme.global_vars = 'lonf, latf, time, plevf are the global vars';
     %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+    % attention(2020/6/29): 模型仅包含能够计算云辐射效应变量的模式, 可能还会缺少ua, va, wa等其他变量
     modlist_all = ...
-        {{'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'GISS-E2-1-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}, ...
-        ...amip_2000(15)'GISS - E2 - 1 - G / ',
-    {'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'GISS-E2-1-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}, ...
-        ...amip_1980(15)'GISS - E2 - 1 - G / ',
-    {'ACCESS-CM2', 'ACCESS-ESM1-5', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'MIROC6', 'MPI-ESM1-2-HR', 'MPI-ESM1-2-LR', 'MRI-ESM2-0', 'NESM3'}, ...
-        ...ssp245(13)
-    {'ACCESS-CM2', 'ACCESS-ESM1-5', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'MIROC6', 'MPI-ESM1-2-HR', 'MPI-ESM1-2-LR', 'MRI-ESM2-0'}, ...
-        ...ssp370(12)
-    {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'GISS-E2-1-G', 'GISS-E2-1-H', 'GISS-E2-2-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'SAM0-UNICON'}, ...
-        ...abrupt - 4xCO2(14)
-    {'CESM2', 'BCC-CSM2-MR', 'MIROC6', 'MRI-ESM2-0'}, ...
-        ...amip - hist_2000(4)
-    {'CESM2', 'BCC-CSM2-MR', 'MIROC6', 'MRI-ESM2-0'}, ...
-        ...amip - hist_1980(4)
-    {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'GISS-E2-1-G', 'GISS-E2-1-H', 'GISS-E2-2-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}};
-
+        {{'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','BCC-ESM1','CanESM5','CAS-ESM2-0','CESM2','CESM2-FV2','CESM2-WACCM','CESM2-WACCM-FV2','FGOALS-g3','GISS-E2-1-G','GISS-E2-2-G','HadGEM3-GC31-LL','HadGEM3-GC31-MM','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MRI-ESM2-0','NESM3','NorCPM1','SAM0-UNICON','UKESM1-0-LL'},...
+            ...amip_2000(23)'GISS - E2 - 1 - G / ',
+        {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','BCC-ESM1','CanESM5','CAS-ESM2-0','CESM2','CESM2-FV2','CESM2-WACCM','CESM2-WACCM-FV2','FGOALS-g3','GISS-E2-1-G','GISS-E2-2-G','HadGEM3-GC31-LL','HadGEM3-GC31-MM','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MRI-ESM2-0','NESM3','NorCPM1','SAM0-UNICON','UKESM1-0-LL'},...
+            ...amip_1980(23)'GISS - E2 - 1 - G / ',
+        {'ACCESS-CM2','ACCESS-ESM1-5','AWI-CM-1-1-MR','BCC-CSM2-MR','CanESM5','CESM2','CESM2-WACCM','FGOALS-g3','GISS-E2-1-G','HadGEM3-GC31-LL','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR','MRI-ESM2-0','NESM3','UKESM1-0-LL'}, ...
+            ...ssp245(17)
+        {'ACCESS-CM2', 'ACCESS-ESM1-5', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'MIROC6', 'MPI-ESM1-2-HR', 'MPI-ESM1-2-LR', 'MRI-ESM2-0'}, ...
+            ...ssp370(12)
+        {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'GISS-E2-1-G', 'GISS-E2-1-H', 'GISS-E2-2-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'SAM0-UNICON'}, ...
+            ...abrupt - 4xCO2(14)
+        {'CESM2', 'BCC-CSM2-MR', 'MIROC6', 'MRI-ESM2-0'}, ...
+            ...amip - hist_2000(4)
+        {'CESM2', 'BCC-CSM2-MR', 'MIROC6', 'MRI-ESM2-0'}, ...
+            ...amip - hist_1980(4)
+        {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'GISS-E2-1-G', 'GISS-E2-1-H', 'GISS-E2-2-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}};
     % picmtrol(25)
     % {'ACCESS-CM2', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'FIO-ESM-2-0', 'GISS-E2-1-G', 'GISS-E2-1-G-CC', 'GISS-E2-1-H', 'GISS-E2-2-G', 'HadGEM3-GC31 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MPI-ESM-1-2-HAM', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'NorESM1-F', 'SAM0-UNICON'}
-
-    Experiment = {'amip/CMIP', 'amip/CMIP', 'ssp245', 'ssp370', 'abrupt-4xCO2', 'amip-hist', 'amip-hist'};
+    % old amip
+    % {'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'GISS-E2-1-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}, ...
+    Experiment = {'amip/CMIP', 'amip/CMIP','ssp245', 'ssp370', 'abrupt-4xCO2', 'amip-hist', 'amip-hist'};
 
     level.time1 = {'amip_2000-2014/', 'amip_1980-2014/', 'ssp245_2015-2099/', 'ssp370_2015-2099/', ...
         'abrupt-4xCO2_150years/', ...
         'amip-hist_2000-2014/', 'amip-hist_1980-2014/'}; % time series
     level.model2 = modlist_all{p_1}; % model list
     level.process3 = {'rawdata_regrid/', 'anomaly/', 'anomaly_trend/', 'cc/', 'kernelsCal/', ...
-        'radEffect/', 'radEffect_trend/'}; % next file folder names
+        'radEffect/', 'radEffect_trend/','non_localCld/','vsTsEffect/','vsTsEffect_trend/'}; % next file folder names
     level.dvars4 = {'dhus', 'dalb', 'dta', 'dts'}; % note 5 kernels
 
     % time:2000.01-2014.12(interval:15*12);1980.01-2014.12(interval:35*12); 2015.01-2099.12(interval:85*12)
@@ -57,7 +66,7 @@ function [readme, Experiment, level, tLin, mPlev, vars] = modelParameters(p_1)
     tLin.read = {'2000.01-2014.12', '1980.01-2014.12', '2015.01-2099.12', '2015.01-2099.12', '1850.01-1999.12(standard)','2000.01-2014.12', '1980.01-2014.12'}; % txt information '2000.03-2014.02', '1979.03-2014.02'
     tLin.start = {'2000-01', '1980-01', '2015-01', '2015-01', '1850-01', '2000-01', '1980-01'}; % start year
     tLin.startYear = {2000, 1980, 2015, 2015, 1850, 2000, 1980}; % start year
-    tLin.endYear = {2014, 2014, 2099, 2099}; % start year
+    tLin.endYear = {2014, 2014, 2099, 2099}; % start year(note that 4xco2 not have endyear)
     tLin.inter = {15*12 35*12 85*12 85*12 150*12 15*12 35*12}; % total months
     % tLin.start = [253 13 1 1 1561 1321];
 
@@ -74,3 +83,4 @@ function [readme, Experiment, level, tLin, mPlev, vars] = modelParameters(p_1)
     vars.D3 = {'ts', 'ps', 'rlds', 'rldscs', 'rlus', 'rlut', 'rlutcs', 'rsds', 'rsdscs', 'rsdt', ...
         'rsus', 'rsuscs', 'rsut', 'rsutcs', 'hfss', 'hfls', 'clisccp'};
     vars.D4 = {'hus', 'ta'};
+    vars.lamda={'cloud','wv','ta','alb'};
