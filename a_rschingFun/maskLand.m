@@ -1,20 +1,20 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-06-10 20:31:05
+% LastEditTime : 2020-07-08 21:11:57
 % LastEditors  : LYC
 % Description  : 
-% FilePath     : /Research/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/maskLand.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/maskLand.m
 %  
 %%---------------------------------------------------------
-function [trendyr] = maskLand(trendyr,lat, maxlat,minlat,areaNum)
+function [inputData] = maskLand(inputData,lat, maxlat,minlat,areaNum)
     %-------------------------------------------------------------------
     % program description(before use check the lat and lon)
     % 1.auto mask world or other area in 144x72 grids;
     % 2.cal the cc(compare first row);
     %-------------------------------------------------------------------
     % input:
-    % trendyr: input data
+    % inputData: input data
     % areaNum: 0 no mask, 1 world land, 2 china land,
     % maxlat,minlat: lat scope;
 
@@ -24,7 +24,7 @@ function [trendyr] = maskLand(trendyr,lat, maxlat,minlat,areaNum)
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')% ????????????????word_mapx(:),word_mapy(:)
     load('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
     
-    sizeVar=size(trendyr);
+    sizeVar=size(inputData);
     % mask
     if areaNum==1
         % mask word(land and lat:-60,60)
@@ -32,16 +32,23 @@ function [trendyr] = maskLand(trendyr,lat, maxlat,minlat,areaNum)
     elseif areaNum==2
         mask1=maskchina_cp;
     end
+    
     if areaNum==0
 
     else
-        mask_temp=repmat(mask1,[1 1 sizeVar(3)]);
-        trendyr(~mask_temp)=NaN;
-        trendyr(:,lat>maxlat|lat<minlat,:)=NaN;
-        mask1 = maskworld_cp;
-        mask_temp = repmat(mask1, [1 1 sizeVar(3)]);
-        trendyr(~mask_temp) = NaN;
-        trendyr(:, lat > maxlat | lat < minlat, :) = NaN;
+        if length(sizeVar)==2
+            mask_temp=mask1;
+            inputData(~mask_temp)=NaN;
+            inputData(:,lat>maxlat|lat<minlat,:)=NaN;
+        elseif length(sizeVar)==3
+            mask_temp=repmat(mask1,[1 1 sizeVar(3)]);
+            inputData(~mask_temp)=NaN;
+            inputData(:,lat>maxlat|lat<minlat,:)=NaN;
+            % mask1 = maskworld_cp;
+            % mask_temp = repmat(mask1, [1 1 sizeVar(3)]);
+            % inputData(~mask_temp) = NaN;
+            % inputData(:, lat > maxlat | lat < minlat, :) = NaN;
+        end
     end
 
 

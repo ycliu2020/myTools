@@ -1,10 +1,10 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-06-12 09:09:18
+% LastEditTime : 2020-07-08 15:22:46
 % LastEditors  : LYC
 % Description  : 
-% FilePath     : /Research/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/maskArea.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/maskArea.m
 %  
 %%---------------------------------------------------------
 function [trendyr, yr_cc, yr_pp] = maskArea(trendyr,lat, maxlat,minlat,areaNum)
@@ -32,8 +32,9 @@ function [trendyr, yr_cc, yr_pp] = maskArea(trendyr,lat, maxlat,minlat,areaNum)
     elseif areaNum==2
         mask1=maskchina_cp;
     end
-    if areaNum==0
 
+    if areaNum==0
+        
     else
         mask_temp=repmat(mask1,[1 1 sizeVar(3)]);
         trendyr(~mask_temp)=NaN;

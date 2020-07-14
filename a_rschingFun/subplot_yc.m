@@ -1,9 +1,18 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-07-07 11:01:25
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/subplot_yc.m
+%  
+%%---------------------------------------------------------
 function [h] = subplot_yc(nrow,ncol,irow,icol)
 %
 % function [h] = subplot_yih(nrow,ncol,irow,icol)
 %
 if nrow==1&&ncol==1
-    h = subplot('position',[0.1 0.1 0.8 0.8]);
+    h = subplot('position',[0.1 0.1 0.8 0.8]);%[离左边缘 离下边缘 自身宽 自身高]
 else
 
     widthPlot = 1 ./ ncol .* .7;%子图宽度
