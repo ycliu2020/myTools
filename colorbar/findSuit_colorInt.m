@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-15 20:39:19
-% LastEditTime : 2020-06-16 10:37:49
+% LastEditTime : 2020-07-21 15:13:59
 % LastEditors  : LYC
 % Description  : given that we have a series, now need to plot
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/colorbar/findSuit_colorInt.m
@@ -40,6 +40,12 @@ function [colorbar_Series] = findSuit_colorInt(data, col_SeriesNum)
     else 
         cS_Plus= round(cS_Plus.*10.^(2-result1))./(10.^(2-result1));
     end
-    colorbar_Series(1,col_SeriesNum/2+2:end)=cS_Plus;
-    colorbar_Series(1,1:col_SeriesNum/2)=fliplr(-cS_Plus);
+    if isempty(cS_Plus)==1
+        colorbar_Series(1,col_SeriesNum/2+2:end)=1:col_SeriesNum/2;
+        colorbar_Series(1,1:col_SeriesNum/2)=fliplr(-(1:col_SeriesNum/2));
+        colorbar_Series(1,col_SeriesNum/2+1)=0;
+    else
+        colorbar_Series(1,col_SeriesNum/2+2:end)=cS_Plus;
+        colorbar_Series(1,1:col_SeriesNum/2)=fliplr(-cS_Plus);    
+    end
 end

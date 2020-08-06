@@ -1,3 +1,12 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-07-28 11:11:30
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/area_mean.m
+%  
+%%---------------------------------------------------------
 function [mean_v] = area_mean(v,latitude)
 % function [mean_v] = area_mean(v,latitude)
 
