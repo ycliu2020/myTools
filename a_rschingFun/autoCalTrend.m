@@ -1,3 +1,12 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-07-29 11:14:21
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/autoCalTrend.m
+%  
+%%---------------------------------------------------------
 function [trendm, trends,trendyr, p, cons] = autoCalTrend(dvar, nlon, nlat, time, startmonth)
     % this program didnt finished  
     %-------------------------------------------------------------------
