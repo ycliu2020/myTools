@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-07-28 11:09:16
-% LastEditTime : 2020-07-28 11:22:15
+% LastEditTime : 2020-08-10 15:57:56
 % LastEditors  : LYC
 % Description  : Latitude weighted average
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/areaMeanLatWeight.m
