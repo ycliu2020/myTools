@@ -1,3 +1,12 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-08-31 09:55:47
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/maskmap.m
+%  
+%%---------------------------------------------------------
 function [xc, yc] = maskmap(shapefile, masktype, varargin)    
 %  对所绘制图形进行白化
 % 例子

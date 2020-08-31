@@ -1,7 +1,7 @@
 show_syms.m  显示所有希腊符号以及代码
 save_png.m  保存为高质量png
 
-安装：install
+
 mycolor.m 颜色配色相关
 R95p.m  算极端降水95百分位的程序
 R99p.m  算极端降水99百分位的程序

@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-07-27 16:28:28
+% LastEditTime : 2020-08-30 21:07:17
 % LastEditors  : LYC
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipPlotParameters.m
@@ -14,7 +14,7 @@ function [mlabels, areaNum] = cmipPlotParameters(sfcToa, landOrNot, figType)
     %
     % sfcToa: input, determine 'SFC', 'TOA', 'ATM(TOA-SFC)'
     % landOrNot: input, determine 'landSea' or 'land','china'
-    % figType: input, determine  'radEffect', 'nonLocalCld_rad','nonLocalCld_Ts','nonLocalCld2'
+    % figType: input, determine  'radEffect', 'nonLocalCld_rad','nonLocalCld_Ts','nonLocalCld3'
 
     %% commom labels
     level_label = {'SFC', 'TOA', 'ATM(TOA-SFC)'}; % plot which level to plot
@@ -179,7 +179,7 @@ function [mlabels, areaNum] = cmipPlotParameters(sfcToa, landOrNot, figType)
             mlabels.level = level_label{sfcToa};
         end
 
-    elseif strcmp(figType, 'nonLocalCld2') == 1
+    elseif strcmp(figType, 'nonLocalCld3') == 1
 
         if mean(sfcToa == 1) == 1 || strcmp(sfcToa, 'SFC') == 1 || strcmp(sfcToa, 'sfc') == 1
             sfcToa = 1;
@@ -193,9 +193,9 @@ function [mlabels, areaNum] = cmipPlotParameters(sfcToa, landOrNot, figType)
                                 'Ts RadEffect', 'Ta RadEffect', 'Ta+q+Alb+Cloud RadEffect', ...
                                 'Cloud RadEffect', 'nonLocal cloud RadEffect', 'cloud+nonLocal cloud RadEffect'}; %4*3
             mlabels.componentNames = {'dts', 'dTs_ta', 'dTs_mainEffect', ...
-                                    'dTs_cld', 'dTsnonLocalCld2', 'dTssumNonlocalCld2', ...
+                                    'dTs_cld', 'dTsnonLocalCld3', 'dTssumNonlocalCld3', ...
                                     'dRsfc_ts', 'dRsfc_ta', 'dRsfc_mainEffect', ...
-                                    'dRsfc_cloud', 'dRnonLocalCld2', 'dRsumNonlocalCld2'};
+                                    'dRsfc_cloud', 'dRnonLocalCld3', 'dRsumNonlocalCld3'};
             mlabels.vars = strcat('trendyr_', mlabels.componentNames);
             mlabels.level = level_label{sfcToa};
         end

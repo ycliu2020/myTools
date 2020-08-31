@@ -1,5 +1,14 @@
+%%---------------------------------------------------------
+% Author       : LYC
+% Date         : 2020-06-09 15:50:13
+% LastEditTime : 2020-08-31 09:56:39
+% LastEditors  : LYC
+% Description  : 
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/auto_draw_1.m
+%  
+%%---------------------------------------------------------
 function [  ] = auto_draw_1(n1,m1,tsmean,hts,lon,lat)
-%自动化ts子图的程序
+%   自动化ts子图的程序
 %   此处显示详细说明
 set(0,'defaultfigurecolor','w')%设置画布底色为白色
 set(gcf,'outerposition',get(0,'screensize'));%设置figure全屏
