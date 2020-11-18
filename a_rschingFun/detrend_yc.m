@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-07-29 11:25:31
+% LastEditTime : 2020-09-16 16:18:48
 % LastEditors  : LYC
 % Description  : this function caled variety trendMon from 1-12 month
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/detrend_yc.m
@@ -26,7 +26,7 @@ function [varb_detrend, trendMon_startJan, cons, pvalue] = detrend_yc(varb, time
 
     if length(varbLen) == 3
 
-        if varbLen(3) ~= length(time) || varbLen(1) ~= length(time)
+        if varbLen(3) ~= length(time) 
             disp('ERROR: mismatching varb and time!');
             return;
         else
@@ -35,7 +35,7 @@ function [varb_detrend, trendMon_startJan, cons, pvalue] = detrend_yc(varb, time
 
     elseif length(varbLen) == 2
 
-        if varbLen(1) ~= length(time) || varbLen(1) ~= length(time)
+        if varbLen(1) ~= length(time) 
             disp('ERROR: mismatching varb and time!');
             return;
         else

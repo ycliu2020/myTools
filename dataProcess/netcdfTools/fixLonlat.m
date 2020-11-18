@@ -1,25 +1,25 @@
-function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepath)
+function [pp, lonFix, latFix, data1] = fixLonlat(pp, Dim, lonFix, latFix, data1, filepath)
 
     % extend the vars to contain 0:2.5:357.5 and 90:-2.5:-90
     % pp : condition parameters
-    % p_2 = 3 or 4 % mean 3 or 4D vars
-    % lon1,lat1: input lat and lon
+    % Dim = 3 or 4 % mean 3 or 4D vars
+    % lonFix,latFix: input lat and lon
     % data1: input vars
 
     if pp(1) == 0
     else
         disp('start fix lon and lat problem: ')
-        if p_2 == 4% 4D
+        if Dim == 4% 4D
             % lat
             if pp(4) == 1% lat <90
 
-                if lat1(end) < 0
-                    if lat1(end)~=-90
-                        lat1(end + 1) = -90;
+                if latFix(end) < 0
+                    if latFix(end)~=-90
+                        latFix(end + 1) = -90;
                         data1(:, end + 1, :, :) = data1(:, end, :, :);
                     end
-                    lat1(2:end + 1) = lat1;
-                    lat1(1) = 90;
+                    latFix(2:end + 1) = latFix;
+                    latFix(1) = 90;
                     data1(:, 2:end + 1, :, :) = data1;
                 else
                     disp('error: lat(end)>0!!!!!!!!!')
@@ -33,7 +33,7 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
             if pp(2) == 0 && pp(3) == 0
 
             else
-                lonInter = lon1(2:end) - lon1(1:end - 1);
+                lonInter = lonFix(2:end) - lonFix(1:end - 1);
                 % interval
                 if length(unique(lonInter)) == 1
                     lonInter = mean(lonInter);
@@ -42,15 +42,15 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
                     return
                 end
 
-                if max(lon1) ~= lon1(end)
+                if max(lonFix) ~= lonFix(end)
                     disp('error: lon direct didnt right!!!!!!!!!')
                     return
                 end
 
                 if pp(2) == 1 && pp(3) == 1% max(lon)<357.5 min(lon)>0
-                    lon1(end + 1) = lon1(end) + lonInter;
-                    lon1(2:end + 1) = lon1;
-                    lon1(1) = lon1(1) - lonInter;
+                    lonFix(end + 1) = lonFix(end) + lonInter;
+                    lonFix(2:end + 1) = lonFix;
+                    lonFix(1) = lonFix(1) - lonInter;
                     [x, y, z, t] = size(data1);
                     tempA = zeros(x + 2, y, z, t);
                     tempA(2:end - 1, :, :, :) = data1;
@@ -58,28 +58,28 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
                     tempA(end, :, :, :) = data1(1, :, :, :);
                     data1 = tempA; clear tempA
                 elseif pp(2) == 1 && pp(3) ~= 1% max(lon)<357.5
-                    lon1(end + 1) = lon1(end) + lonInter;
+                    lonFix(end + 1) = lonFix(end) + lonInter;
                     data1(end + 1, :, :, :) = data1(1, :, :, :);
                 elseif pp(2) ~= 1 && pp(3) == 1% min(lon)>0
-                    lon1(2:end + 1) = lon1;
-                    lon1(1) = lon1(1) - lonInter;
+                    lonFix(2:end + 1) = lonFix;
+                    lonFix(1) = lonFix(1) - lonInter;
                     data1(2:end + 1, :, :, :) = data1;
                     data1(1, :, :, :) = data1(end, :, :, :);
                 end
 
             end
 
-        elseif p_2 == 3 % 3D
+        elseif Dim == 3 % 3D
             % lat
             if pp(4) == 1% lat <90
 
-                if lat1(end) < 0
-                    if lat1(end)~=-90
-                        lat1(end + 1) = -90;
+                if latFix(end) < 0
+                    if latFix(end)~=-90
+                        latFix(end + 1) = -90;
                         data1(:, end + 1, :) = data1(:, end, :);
                     end
-                    lat1(2:end + 1) = lat1;
-                    lat1(1) = 90;
+                    latFix(2:end + 1) = latFix;
+                    latFix(1) = 90;
                     data1(:, 2:end + 1, :) = data1;
                 else
                     disp('error: lat(end)>0!!!!!!!!!')
@@ -93,7 +93,7 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
             if pp(2) == 0 && pp(3) == 0
 
             else
-                lonInter = lon1(2:end) - lon1(1:end - 1);
+                lonInter = lonFix(2:end) - lonFix(1:end - 1);
                 % interval
                 if length(unique(lonInter)) == 1
                     lonInter = mean(lonInter);
@@ -102,15 +102,15 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
                     return
                 end
 
-                if max(lon1) ~= lon1(end)
+                if max(lonFix) ~= lonFix(end)
                     disp('error: lon direct didnt right!!!!!!!!!')
                     return
                 end
 
                 if pp(2) == 1 && pp(3) == 1% max(lon)<357.5 min(lon)>0
-                    lon1(end + 1) = lon1(end) + lonInter;
-                    lon1(2:end + 1) = lon1;
-                    lon1(1) = lon1(1) - lonInter;
+                    lonFix(end + 1) = lonFix(end) + lonInter;
+                    lonFix(2:end + 1) = lonFix;
+                    lonFix(1) = lonFix(1) - lonInter;
                     [x, y, z, t] = size(data1);
                     tempA = zeros(x + 2, y, z, t);
                     tempA(2:end - 1, :, :) = data1;
@@ -118,11 +118,11 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
                     tempA(end, :,  :) = data1(1, :, :);
                     data1 = tempA; clear tempA
                 elseif pp(2) == 1 && pp(3) ~= 1% max(lon)<357.5
-                    lon1(end + 1) = lon1(end) + lonInter;
+                    lonFix(end + 1) = lonFix(end) + lonInter;
                     data1(end + 1, :, :) = data1(1, :, :);
                 elseif pp(2) ~= 1 && pp(3) == 1% min(lon)>0
-                    lon1(2:end + 1) = lon1;
-                    lon1(1) = lon1(1) - lonInter;
+                    lonFix(2:end + 1) = lonFix;
+                    lonFix(1) = lonFix(1) - lonInter;
                     data1(2:end + 1, :,:) = data1;
                     data1(1, :, :) = data1(end, :, :);
                 end
@@ -133,9 +133,10 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
         % test part
         disp('check again: ')
         lon_v.units = ncreadatt(filepath.name, 'lon', 'units');
-        lon_v.data = lon1;
         lat_v.units = ncreadatt(filepath.name, 'lat', 'units');
-        lat_v.data = lat1;
+
+        lon_v.data = lonFix;
+        lat_v.data = latFix;
         pp=zeros(1,4);
     
         if ~strcmp(lon_v.units,'degrees_east')
@@ -143,6 +144,8 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
             disp(['target: ',lon_v.units])
             disp(['standard: ','degrees_east'])
             pp(1)=1;
+            return
+
         end
     
         if ~strcmp(lat_v.units,'degrees_north')
@@ -150,6 +153,8 @@ function [pp, lon1, lat1, data1] = fixLonlat(pp, p_2, lon1, lat1, data1, filepat
             disp(['target: ',lon_v.units])
             disp(['standard: ','degrees_north'])
             pp(1)=1;
+            return
+
         end
     
         if max(lon_v.data) < 357.5

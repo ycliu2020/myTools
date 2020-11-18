@@ -15,6 +15,8 @@ function [pp] = testLonlat(filepath)
         disp(['target: ',lon_v.units])
         disp(['standard: ','degrees_east'])
         pp(1)=1;
+        return
+
     end
 
     if ~strcmp(lat_v.units,'degrees_north')
@@ -22,6 +24,8 @@ function [pp] = testLonlat(filepath)
         disp(['target: ',lon_v.units])
         disp(['standard: ','degrees_north'])
         pp(1)=1;
+        return
+
     end
 
     if max(lon_v.data) < 357.5%strcmp(level.model2{level1}(1:end),'CanESM5') == 1

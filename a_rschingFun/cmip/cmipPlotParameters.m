@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-08-30 21:07:17
+% LastEditTime : 2020-09-08 10:52:19
 % LastEditors  : LYC
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipPlotParameters.m
@@ -196,6 +196,16 @@ function [mlabels, areaNum] = cmipPlotParameters(sfcToa, landOrNot, figType)
                                     'dTs_cld', 'dTsnonLocalCld3', 'dTssumNonlocalCld3', ...
                                     'dRsfc_ts', 'dRsfc_ta', 'dRsfc_mainEffect', ...
                                     'dRsfc_cloud', 'dRnonLocalCld3', 'dRsumNonlocalCld3'};
+            mlabels.vars = strcat('trendyr_', mlabels.componentNames);
+            mlabels.level = level_label{sfcToa};
+        end
+    elseif strcmp(figType, 'nonLocalCld3_speci') == 1
+        if mean(sfcToa == 1) == 1 || strcmp(sfcToa, 'SFC') == 1 || strcmp(sfcToa, 'sfc') == 1
+            sfcToa = 1;
+            %% specific labels
+            mlabels.unite = {unitTemp, unitTemp, unitTemp};
+            mlabels.component = {'Ts', 'nonLocal cloud TempEffect', 'cloud+nonLocal cloud TempEffect'}; %1*3
+            mlabels.componentNames = {'dts', 'dTsnonLocalCld3', 'dTssumNonlocalCld3'};
             mlabels.vars = strcat('trendyr_', mlabels.componentNames);
             mlabels.level = level_label{sfcToa};
         end

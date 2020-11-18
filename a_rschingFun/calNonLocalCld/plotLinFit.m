@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-14 09:56:59
-% LastEditTime : 2020-08-30 13:29:43
+% LastEditTime : 2020-09-23 10:14:58
 % LastEditors  : LYC
 % Description  : 线性拟合输出并画图的程序
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/calNonLocalCld/plotLinFit.m
