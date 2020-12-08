@@ -1,13 +1,13 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2020-11-16 22:29:04
-% LastEditors  : LYC
+% LastEditTime : 2020-12-07 21:23:42
+% LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
-% FilePath     : /code/p1_processObserveData/ERA5/timeSeriAnalysis/Pyn_figure1_2_ERA5.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/Observe/Pyn_figure4_ERA5.m
 %
 %%---------------------------------------------------------
-function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure1_2_ERA5(exmNum)
+function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5(exmNum)
     % load mask map
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
@@ -32,7 +32,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure1_2_ER
     kernelCalPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{4}); % kernelCal
     radEfectPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{5}); %radEffect
     dradTrendPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{6}); %/data1/liuyincheng/cmip6-proces/aimp_2000-2014/MRI-ESM2-0/ensemble/radEffect_trend/
-    outPutPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj1_Observe/TimeSeries_analysis/', ['ERA5_', tLin.time{exmNum}]);
+    outPutPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/');
     auto_mkdir(outPutPath)
     load([dvarsTrendPath, 'global_vars.mat'])%% 'lon_f', 'lat_f', 'lon_k', 'lat_k', 'plev_k', 'time'
     load([radEfectPath, 'dradEfect_sfc_cld.mat'])% load albEffect, husEffect, mainEffect, taEffect, taOnlyEffect, taOnlyEffect2, tasEffect, tasEffect2, totalEffect, tsEffect, wvlwEffect, wvswEffect
@@ -44,7 +44,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure1_2_ER
     drhs = autoRegrid3(lon_k, lat_k, time, drhs, lon_f, lat_f, time);
 
     varUsed = zeros(nlonf, nlatf, ntime, 2);
-    varUsed(:, :, :, 1) = tsEffect;
+    varUsed(:, :, :, 1) = -tsEffect;
     varUsed(:, :, :, 2) = drhs;
     varNames = {'dR_{Ts}', 'dRHeating', 'ta RadEfect', 'ts RadEfect', 'q RadEfect', 'alb RadEfect'};
     yLabel = {'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2'};
@@ -73,6 +73,14 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure1_2_ER
         end
 
     end
+
+
+    % cut to 2000.03-2014-02
+    timeStr=string(datestr(datenum(time),'yyyy-mm-dd'));
+    cutEnd=find(timeStr=='2014-02-01');
+    time=time(1:cutEnd);
+    ntime = length(time);
+    varUsedYearly_weightMean=varUsedYearly_weightMean(1:14,:);
 
     ear5_time = time;
     clear time
@@ -109,8 +117,8 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure1_2_ER
 
     end
 
-    headLineTxt=['The correlation coefficient of dRTs and dRHeating~C~            Data: ', mlabels.dataName{1}, ', Level: ', mlabels.level, ', Era: ', tLin.time{exmNum},'~C~            global mean CC= ', num2str(cc_weightMean{2})];
-    figName = [mlabels.dataName{1}, '_', tLin.time{exmNum}, '_', mlabels.area, '_', mlabels.level, '_globalDistribution'];
+    headLineTxt=['The correlation coefficient of LW_up and dRHeating~C~            Data: ', mlabels.dataName{1}, ', Level: ', mlabels.level, ', Era: ', tLin.time{3},'~C~            global mean CC= ', num2str(cc_weightMean{2})];
+    figName = ['Fig4_',mlabels.dataName{1}, '_', tLin.time{3}, '_', mlabels.area, '_', mlabels.level, '_globalDistribution'];
     figPath = [outPutPath, '/', figName];
     colorLab=mycolor(18);
 

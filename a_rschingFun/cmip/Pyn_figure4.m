@@ -1,13 +1,13 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2020-11-17 09:49:02
-% LastEditors  : LYC
+% LastEditTime : 2020-12-07 21:34:16
+% LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
-% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure1_2.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure4.m
 %
 %%---------------------------------------------------------
-function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure1_2(exmNum, mdlNum)
+function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(exmNum, mdlNum)
     % load mask map
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
@@ -25,12 +25,9 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure1_2
     [~, ~, level, ~, ~, ~] = cmipParameters(exmNum);
     % exmPath
     exmPath = ['/data1/liuyincheng/cmip6-process/', level.time1{exmNum}]; %/data1/liuyincheng/cmip6-process/2000-2014/
-    mPath.uniOutput1 = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj2_cmip6Result/TimeSeries_analysis/ts&Rheating_landMean_Radeffect', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)],
-    mPath.uniOutput2 = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj2_cmip6Result/TimeSeries_analysis/ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)],
-    mPath.Output1 = fullfile(mPath.uniOutput1);
-    mPath.Output2 = fullfile(mPath.uniOutput2);
-    auto_mkdir(mPath.Output1)
-    auto_mkdir(mPath.Output2)
+
+    outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
+    auto_mkdir(outputPath)
 
     % model path
     mdlName = level.model2{mdlNum};
@@ -97,7 +94,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure1_2
         dR_netSfc = squeeze(dR_allsky(:, :, :, 1));
         dR_netTOA = squeeze(dR_allsky(:, :, :, 2));
         varUsed = zeros(nlonf, nlatf, ntime, 2);
-        varUsed(:, :, :, 1) = tsEffect;
+        varUsed(:, :, :, 1) = -tsEffect;
         varUsed(:, :, :, 2) = drhs;
         varNames = {'dR_{Ts}', 'dRHeating', 'ta RadEfect', 'ts RadEfect', 'q RadEfect', 'alb RadEfect'};
         yLabel = {'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2'};
@@ -169,9 +166,9 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure1_2
         end
 
     end
-    headLineTxt = ['The correlation coefficient of dRTs and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(1:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum},', global mean CC= ', num2str(cc_weightMean{2})];
+    headLineTxt = ['The correlation coefficient of LW_up and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(1:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum},', global mean CC= ', num2str(cc_weightMean{2})];
     figName = [level.time1{exmNum}(1:end - 1), '_', level.model2{mdlNum}, '_', esmName{esmNum}];
-    figurePath = [mPath.Output2, '/', figName];
+    figurePath = [outputPath, '/', figName];
     colorLab=mycolor(18);
 
 end

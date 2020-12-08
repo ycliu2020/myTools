@@ -18,7 +18,7 @@
 % initial time in futrue(1032 total): 1 of 1032(2015.01);
 %
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure3_ERA5(exmNum)
+function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5_ERA5(exmNum)
 
     % load mask map
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask

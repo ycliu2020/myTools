@@ -1,10 +1,10 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-11-07 15:11:29
-% LastEditTime : 2020-11-09 22:32:50
-% LastEditors  : LYC
+% LastEditTime : 2020-12-08 15:09:39
+% LastEditors  : Please set LastEditors
 % Description  : 
-% FilePath     : /code/p1_processObserveData/ERA5/contribAnalysis/areaMapGenerate.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/areaMapGenerate.m
 % symbol_custom_string_obkoro1:  
 %%---------------------------------------------------------
 clc; clear;
@@ -29,21 +29,21 @@ bou_chinaProvinceX = [bou_chinaProvince(:).X]; bou_chinaProvinceY = [bou_chinaPr
 
 % China east
 maskchina_east = maskchina_cp;
-maskchina_east(lonw < 112, :) = 0;
-maskchina_east(:, latw > 38) = 0;
+maskchina_east(lonw < 112 | lonw > 122, :) = 0;
+maskchina_east(:, latw > 37 | latw < 22) = 0;
 readme_mask_CN_east = 'area of east China, Range: lonw>112E,latw<38N; Based on maskchina_cp(lon, lat same as it)';
 save('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472_east.mat', 'maskchina_east', 'lat14472', 'lon14472', 'readme_mask_CN_east')
 
 % USA east
 maskUSA_east = maskworld_cp;
-maskUSA_east(lonw < -90 | lonw>-72, :) = 0;
+maskUSA_east(lonw < -90 | lonw>-80, :) = 0;
 maskUSA_east(:, latw < 30 | latw>45) = 0;
-readme_mask_USA_east = 'area of east USA, Range: 288>lonw>270E,30<latw<45N; Based on maskworld_cp(lon, lat same as it)';
+readme_mask_USA_east = 'area of east USA, Range: 288>lonw>276E,25<latw<45N; Based on maskworld_cp(lon, lat same as it)';
 save('/home/liuyc/lib/tools/matlab/plot/myMap/03.other_area/mask14472_eastUSA.mat', 'maskUSA_east', 'lat14472', 'lon14472', 'readme_mask_USA_east')
 
 % EUR west
 maskEUR_west = maskworld_cp;
-maskEUR_west(lonw >60 | lonw<-9, :) = 0;
-maskEUR_west(:, latw < 35 | latw>60) = 0;
-readme_mask_EUR_west = 'area of west EUR, Range: -9>lonw>60E,35<latw<60N; Based on maskworld_cp(lon, lat same as it)';
+maskEUR_west(lonw >14 | lonw<-1, :) = 0;
+maskEUR_west(:, latw < 42 | latw>54) = 0;
+readme_mask_EUR_west = 'area of west EUR, Range: -1>lonw>15E,42<latw<55N; Based on maskworld_cp(lon, lat same as it)';
 save('/home/liuyc/lib/tools/matlab/plot/myMap/03.other_area/mask14472_westEUR.mat', 'maskEUR_west', 'lat14472', 'lon14472', 'readme_mask_EUR_west')
