@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-11-17 09:38:25
-% LastEditTime : 2020-12-08 21:25:29
+% LastEditTime : 2021-03-11 22:35:12
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure9.m
@@ -36,8 +36,8 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = Pyn_figure9(exmN
     lon_f = lon_k; nlonf = length(lon_f);
 
     [~, ~, level, ~, ~, ~] = cmipParameters(exmNum);
-    % mPath.input:E:/data/cmip6-process/2000-2014/
-    mPath.input = fullfile('/data1/liuyincheng/cmip6-process/', level.time1{exmNum});
+    % mPath.input:E:/data/CMIP6-process/2000-2014/
+    mPath.input = fullfile('/data1/liuyincheng/CMIP6-process/', level.time1{exmNum});
     % mPath.output:a_research/P02.Ts_change_research/figure/04.cmip6Result/2000-2014/
     mPath.uniOutput = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/Fig9_CMIP6_ssp370_Trend/', level.time1{exmNum});
     mPath.Output = fullfile(mPath.uniOutput);
@@ -63,18 +63,18 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = Pyn_figure9(exmN
     
     % load data
 
-    varsPath = fullfile(esmPath, level.process3{1}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/rawdata
-    dvarsPath = fullfile(esmPath, level.process3{2}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/anomaly
-    dvarsTrendPath = fullfile(esmPath, level.process3{3}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/anomaly_trend
-    kernelPath = fullfile(esmPath, level.process3{5}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/kernelsCal
-    dradEffectPath = fullfile(esmPath, level.process3{6}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/radEffect/
-    dradTrendPath = fullfile(esmPath, level.process3{7}); %/data1/liuyincheng/cmip6-process/amip_1980-2014/CESM2/radEffect_trend
-    dnonLocalCldPath = fullfile(esmPath, level.process3{8}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/non_localCld/
-    vsTsEffectTrendPath = fullfile(esmPath, level.process3{10}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/vsTsEffect_trend/
+    varsPath = fullfile(esmPath, level.process3{1}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/rawdata
+    dvarsPath = fullfile(esmPath, level.process3{2}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/anomaly
+    dvarsTrendPath = fullfile(esmPath, level.process3{3}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/anomaly_trend
+    kernelPath = fullfile(esmPath, level.process3{5}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/kernelsCal
+    dradEffectPath = fullfile(esmPath, level.process3{6}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/radEffect/
+    dradTrendPath = fullfile(esmPath, level.process3{7}); %/data1/liuyincheng/CMIP6-process/amip_1980-2014/CESM2/radEffect_trend
+    dnonLocalCldPath = fullfile(esmPath, level.process3{8}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/non_localCld/
+    vsTsEffectTrendPath = fullfile(esmPath, level.process3{10}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/vsTsEffect_trend/
 
     load([dradTrendPath, 'global_vars.mat'])% lat lon time plevf readme
-    load([dradTrendPath, 'trend_dradEfect_toa_cld.mat'])% 10 vars:'trendyr_dRtoa_ta','trendyr_dRtoa_taOnly2', 'trendyr_dRtoa_tas2., 'trendyr_dRtoa_tsAtom', 'trendyr_dRtoa_mainEffect', 'trendyr_dRtoa_residual', 'trendyr_dRtoa_cloud', 'trendyr_dRtoa_q', 'trendyr_dRtoa_alb', 'trendyr_dRtoa_ts'
-    load([dradTrendPath, 'trend_dradEfect_sfc_cld.mat'])% 10 vars:'trendyr_dRsfc_ta','trendyr_dRsfc_taOnly2', 'trendyr_dRsfc_tas2., 'trendyr_dRsfc_tsAtom', 'trendyr_dRsfc_mainEffect', 'trendyr_dRsfc_residual', 'trendyr_dRsfc_cloud', 'trendyr_dRsfc_q', 'trendyr_dRsfc_alb', 'trendyr_dRsfc_ts'
+    load([dradTrendPath, 'trend_dradEffect_toa_cld.mat'])% 10 vars:'trendyr_dRtoa_ta','trendyr_dRtoa_taOnly2', 'trendyr_dRtoa_tas2., 'trendyr_dRtoa_tsAtom', 'trendyr_dRtoa_mainEffect', 'trendyr_dRtoa_residual', 'trendyr_dRtoa_cloud', 'trendyr_dRtoa_q', 'trendyr_dRtoa_alb', 'trendyr_dRtoa_ts'
+    load([dradTrendPath, 'trend_dradEffect_sfc_cld.mat'])% 10 vars:'trendyr_dRsfc_ta','trendyr_dRsfc_taOnly2', 'trendyr_dRsfc_tas2., 'trendyr_dRsfc_tsAtom', 'trendyr_dRsfc_mainEffect', 'trendyr_dRsfc_residual', 'trendyr_dRsfc_cloud', 'trendyr_dRsfc_q', 'trendyr_dRsfc_alb', 'trendyr_dRsfc_ts'
     load([dvarsTrendPath, 'trend_dnetTOA.mat'])% trendyr_dnetTOA
     load([dvarsTrendPath, 'trend_drhs.mat'])% trendyr_drhs
     load([dvarsTrendPath, 'trend_dhFlux.mat'])% trendyr_dhFlux
@@ -108,9 +108,9 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = Pyn_figure9(exmN
         figTitle.subTitle{varNum} = mlabels.component{varNum};
     end
 
-    figTitle.headLineTxt = ['Level:', mlabels.level, ', Era: ', level.time1{exmNum}(1:end - 1), ', Trend(year mean)~C~            Model:', level.model2{mdlNum}, ', Ensemble: ', esm, ', Unit: K/10a'];
+    figTitle.headLineTxt = ['Level:', mlabels.level, ', Era: ', level.time1{exmNum}(5:end - 1), ', Trend(year mean)~C~            Model:', level.model2{mdlNum}, ', Ensemble: ', esm, ', Unit: K/10a'];
 
-    figName = [level.time1{exmNum}(1:end - 1), '_', level.model2{mdlNum}, '_', mlabels.fileN1, '_', esm];
+    figName = [level.time1{exmNum}(5:end - 1), '_', level.model2{mdlNum}, '_', mlabels.fileN1, '_', esm];
     figPath = [mPath.Output, '/', figName];
     colorLab1 = mycolor('freshStyle_16');
     colorLab =colorLab1(end-9:end,:);

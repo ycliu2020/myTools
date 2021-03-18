@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2020-12-07 21:34:16
+% LastEditTime : 2021-03-11 22:40:37
 % LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure4.m
@@ -24,7 +24,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
 
     [~, ~, level, ~, ~, ~] = cmipParameters(exmNum);
     % exmPath
-    exmPath = ['/data1/liuyincheng/cmip6-process/', level.time1{exmNum}]; %/data1/liuyincheng/cmip6-process/2000-2014/
+    exmPath = ['/data1/liuyincheng/CMIP6-process/', level.time1{exmNum}]; %/data1/liuyincheng/CMIP6-process/2000-2014/
 
     outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
     auto_mkdir(outputPath)
@@ -59,12 +59,12 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         %% load and read
         esmPath = fullfile(mdlPath, esmName{esmNum, 1});
         % data path
-        varsPath = fullfile(esmPath, level.process3{1}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/rawdata_regrid
-        dvarsPath = fullfile(esmPath, level.process3{2}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/anomaly
-        dvarsTrendPath = fullfile(esmPath, level.process3{3}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/anomaly_trend
-        kernelPath = fullfile(esmPath, level.process3{5}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/kernelsCal
-        dradEffectPath = fullfile(esmPath, level.process3{6}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/radEffect/
-        dnonLocalCldPath = fullfile(esmPath, level.process3{8}); %/data1/liuyincheng/cmip6-process/2000-2014/MRI-ESM2-0/non_localCld/
+        varsPath = fullfile(esmPath, level.process3{1}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/rawdata_regrid
+        dvarsPath = fullfile(esmPath, level.process3{2}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/anomaly
+        dvarsTrendPath = fullfile(esmPath, level.process3{3}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/anomaly_trend
+        kernelPath = fullfile(esmPath, level.process3{5}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/kernelsCal
+        dradEffectPath = fullfile(esmPath, level.process3{6}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/radEffect/
+        dnonLocalCldPath = fullfile(esmPath, level.process3{8}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/non_localCld/
         load([dradEffectPath, 'global_vars.mat'])% lat_f lon_f time plev_k readme
         ntime = length(time.date);
 
@@ -87,12 +87,12 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         load([dradEffectPath, 'dR_cloud_sfc.mat'])
 
         % TotalEffect
-        load([dradEffectPath, 'dradEfect_sfc_cld.mat'])% 'totalEffect', 'wvlwEffect', 'wvswEffect', 'tsEffect', 'albEffect', 'husEffect', 'taEffect', 'tasEffect2', 'taOnlyEffect2', 'totalEffect', 'mainEffect'
-        load([dradEffectPath, 'real_dradEfect.mat'])% 'dR_allsky', 'l_rad', 's_rad', 'dR_clr', 'readme_realradEfect'
+        load([dradEffectPath, 'dradEffect_sfc_cld.mat'])% 'totalEffect', 'wvlwEffect', 'wvswEffect', 'tsEffect', 'albEffect', 'husEffect', 'taEffect', 'tasEffect2', 'taOnlyEffect2', 'totalEffect', 'mainEffect'
+        load([dradEffectPath, 'real_dradEffect.mat'])% 'dR_net_cld', 'l_rad', 's_rad', 'dR_clr', 'readme_realradEffect'
         load([dradEffectPath, 'dR_residual_cld_sfc.mat'])% dR_residual_cld_sfc
         load([dradEffectPath, 'dR_residual_cld_toa.mat'])% dR_residual_cld_toa
-        dR_netSfc = squeeze(dR_allsky(:, :, :, 1));
-        dR_netTOA = squeeze(dR_allsky(:, :, :, 2));
+        dR_netSfc = squeeze(dR_net_cld(:, :, :, 1));
+        dR_netTOA = squeeze(dR_net_cld(:, :, :, 2));
         varUsed = zeros(nlonf, nlatf, ntime, 2);
         varUsed(:, :, :, 1) = -tsEffect;
         varUsed(:, :, :, 2) = drhs;
@@ -166,8 +166,8 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         end
 
     end
-    headLineTxt = ['The correlation coefficient of LW_up and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(1:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum},', global mean CC= ', num2str(cc_weightMean{2})];
-    figName = [level.time1{exmNum}(1:end - 1), '_', level.model2{mdlNum}, '_', esmName{esmNum}];
+    headLineTxt = ['The correlation coefficient of LW_up and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(5:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum},', global mean CC= ', num2str(cc_weightMean{2})];
+    figName = [level.time1{exmNum}(5:end - 1), '_', level.model2{mdlNum}, '_', esmName{esmNum}];
     figurePath = [outputPath, '/', figName];
     colorLab=mycolor(18);
 

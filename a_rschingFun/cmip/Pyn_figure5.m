@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-11-17 09:38:25
-% LastEditTime : 2020-11-26 15:06:40
+% LastEditTime : 2021-03-11 22:46:00
 % LastEditors  : Please set LastEditors
 % Description  : 
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure5.m
@@ -37,8 +37,8 @@ function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5(exmNu
     lon_f = lon_k; nlonf = length(lon_f);
 
     [~, ~, level, ~, ~, ~] = cmipParameters(exmNum);
-    % mPath.input:E:/data/cmip6-process/2000-2014/
-    mPath.input = fullfile('/data1/liuyincheng/cmip6-process/', level.time1{exmNum});
+    % mPath.input:E:/data/CMIP6-process/2000-2014/
+    mPath.input = fullfile('/data1/liuyincheng/CMIP6-process/', level.time1{exmNum});
     % mPath.output:a_research/P02.Ts_change_research/figure/04.cmip6Result/2000-2014/
 
 
@@ -49,8 +49,8 @@ function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5(exmNu
     disp([level.model2{mdlNum}, ' model start!'])
 
     % load data
-    dradTrendPath = fullfile(mdlPath, esm, level.process3{7}); %/data1/liuyincheng/cmip6-process/amip_1980-2014/CESM2/Effect_trend
-    danomTrendPath = fullfile(mdlPath, esm, level.process3{3}); %/data1/liuyincheng/cmip6-process/amip_1980-2014/CESM2/anomaly_trend
+    dradTrendPath = fullfile(mdlPath, esm, level.process3{7}); %/data1/liuyincheng/CMIP6-process/amip_1980-2014/CESM2/Effect_trend
+    danomTrendPath = fullfile(mdlPath, esm, level.process3{3}); %/data1/liuyincheng/CMIP6-process/amip_1980-2014/CESM2/anomaly_trend
 
     if ~exist(dradTrendPath, 'dir')
         disp(['the ', esm, ' ensemble of ', level.model2{mdlNum}, ' didnt exist']);
@@ -62,8 +62,8 @@ function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5(exmNu
     end
 
     load([dradTrendPath, 'global_vars.mat'])% lat_f lon_f time plevf readme
-    load([dradTrendPath, 'trend_dradEfect_toa_cld.mat'])% 10 vars:'trendyr_dRtoa_ta','trendyr_dRtoa_taOnly2', 'trendyr_dRtoa_tas2., 'trendyr_dRtoa_tsAtom', 'trendyr_dRtoa_mainEffect', 'trendyr_dRtoa_residual', 'trendyr_dRtoa_cloud', 'trendyr_dRtoa_q', 'trendyr_dRtoa_alb', 'trendyr_dRtoa_ts'
-    load([dradTrendPath, 'trend_dradEfect_sfc_cld.mat'])% 10 vars:'trendyr_dRsfc_ta','trendyr_dRsfc_taOnly2', 'trendyr_dRsfc_tas2., 'trendyr_dRsfc_tsAtom', 'trendyr_dRsfc_mainEffect', 'trendyr_dRsfc_residual', 'trendyr_dRsfc_cloud', 'trendyr_dRsfc_q', 'trendyr_dRsfc_alb', 'trendyr_dRsfc_ts'
+    load([dradTrendPath, 'trend_dradEffect_toa_cld.mat'])% 10 vars:'trendyr_dRtoa_ta','trendyr_dRtoa_taOnly2', 'trendyr_dRtoa_tas2., 'trendyr_dRtoa_tsAtom', 'trendyr_dRtoa_mainEffect', 'trendyr_dRtoa_residual', 'trendyr_dRtoa_cloud', 'trendyr_dRtoa_q', 'trendyr_dRtoa_alb', 'trendyr_dRtoa_ts'
+    load([dradTrendPath, 'trend_dradEffect_sfc_cld.mat'])% 10 vars:'trendyr_dRsfc_ta','trendyr_dRsfc_taOnly2', 'trendyr_dRsfc_tas2., 'trendyr_dRsfc_tsAtom', 'trendyr_dRsfc_mainEffect', 'trendyr_dRsfc_residual', 'trendyr_dRsfc_cloud', 'trendyr_dRsfc_q', 'trendyr_dRsfc_alb', 'trendyr_dRsfc_ts'
     load([danomTrendPath, 'trend_dnetTOA.mat'])% trendyr_dnetTOA
     load([danomTrendPath, 'trend_drhs.mat'])% trendyr_drhs
     load([danomTrendPath, 'trend_dhFlux.mat'])% trendyr_dhFlux
@@ -88,7 +88,7 @@ function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5(exmNu
     end
 
     trendyr = trendyr * 365 * 10;
-    trendyr(:, :, 1) = trendyr(:, :, 1);
+    trendyr(:, :, 1) = -trendyr(:, :, 1);
     trendyr(:, :, 10) = trendyr(:, :, 10);
     % mask and cal the cc
     [trendyr, yr_cc, ~] = maskArea(trendyr, lat_f, latRange, -latRange, areaNum);
@@ -102,12 +102,12 @@ function [lon_f, lat_f, trendyr,figTitle, figPath, colorLab] = Pyn_figure5(exmNu
 
         end
     end
-    figTitle.headLineTxt = ['Level:', mlabels.level, ', Era: ', level.time1{exmNum}(1:end - 1), ', Trend(year mean)~C~            Model:', level.model2{mdlNum}, ', Ensemble: ', esm];
+    figTitle.headLineTxt = ['Level:', mlabels.level, ', Era: ', level.time1{exmNum}(5:end - 1), ', Trend(year mean)~C~            Model:', level.model2{mdlNum}, ', Ensemble: ', esm];
     
     mPath.uniOutput = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/Fig5_CMIP6_radEffectTrend');
     mPath.Output = fullfile(mPath.uniOutput);
     auto_mkdir(mPath.Output)
-    figName = ['Fig5_', level.model2{mdlNum}, '_', esm, '_', level.time1{exmNum}(1:end - 1), '_', mlabels.fileN1];
+    figName = ['Fig5_', level.model2{mdlNum}, '_', esm, '_', level.time1{exmNum}(5:end - 1), '_', mlabels.fileN1];
     figPath = [mPath.Output, '/', figName];
     colorLab=mycolor(18);
 

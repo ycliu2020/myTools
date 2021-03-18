@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-09-06 11:24:49
+% LastEditTime : 2021-02-09 01:04:09
 % LastEditors  : LYC
 % Description  : flexible plot sub figures
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/subplot_yc.m
@@ -23,14 +23,14 @@ function [h] = subplot_yc(nrow, ncol, irow, icol)
 
     if nrow == 1
         heightMargin = 0.1; heightPlot = 0.8;
-    end
-
-    if ncol == 1
-        widthMargin = 0.1; widthPlot = 0.8;
+        h = subplot('position', [widthMargin heightMargin widthPlot heightPlot]); %[离左边缘 离下边缘 自身长 自身宽]
+    elseif ncol == 1
+        h = subplot(nrow, ncol, irow);
+    else
+        h = subplot('position', [widthMargin heightMargin widthPlot heightPlot]); %[离左边缘 离下边缘 自身长 自身宽]
     end
 
     % h = subplot('position',[widthInter.*icol+widthPlot.*(icol-1) 1-heightPlot.*irow widthPlot heightPlot]);
-    h = subplot('position', [widthMargin heightMargin widthPlot heightPlot]); %[离左边缘 离下边缘 自身长 自身宽]
 
 end
 
