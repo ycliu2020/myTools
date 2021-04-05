@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-03-10 20:48:35
+% LastEditTime : 2021-04-02 15:45:06
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipParameters.m
@@ -26,7 +26,7 @@ function [readme, Experiment, level, tLin, mPlev, vars] = cmipParameters(p_1)
     readme.global_vars = 'lonf, latf, time, plevf are the global vars';
     %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     % attention(2020/6/29): 模型仅包含能够计算云辐射效应变量的模式, 可能还会缺少ua, va, wa等其他变量
-    modlist_all = ...
+    level.modlist_all = ...
         {{'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CAS-ESM2-0', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'GISS-E2-1-G', 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MIROC-ES2L', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON', 'UKESM1-0-LL'}, ...
             ... amip_2000(23)'GISS - E2 - 1 - G / ',
         {'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CAS-ESM2-0', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'GISS-E2-1-G', 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MIROC-ES2L', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON', 'UKESM1-0-LL'}, ...
@@ -50,13 +50,13 @@ function [readme, Experiment, level, tLin, mPlev, vars] = cmipParameters(p_1)
     % {'ACCESS-CM2', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'FIO-ESM-2-0', 'GISS-E2-1-G', 'GISS-E2-1-G-CC', 'GISS-E2-1-H', 'GISS-E2-2-G', 'HadGEM3-GC31 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MPI-ESM-1-2-HAM', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'NorESM1-F', 'SAM0-UNICON'}
     % old amip
     % {'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'GISS-E2-1-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}, ...
-        Experiment = {'amip/CMIP', 'amip/CMIP', 'ssp245', 'ssp370', 'amip/CFMIP', 'amip/CFMIP', 'abrupt-4xCO2', 'amip-hist', 'amip-hist'};
+    Experiment = {'amip/CMIP', 'amip/CMIP', 'ssp245', 'ssp370', 'amip/CFMIP', 'amip/CFMIP', 'abrupt-4xCO2', 'amip-hist', 'amip-hist'};
 
     level.time1 = {'CMIP/amip_2000-2014/', 'CMIP/amip_1980-2014/', 'CMIP/ssp245_2015-2099/', 'CMIP/ssp370_2015-2099/', ...
                     'CFMIP/amip_2000-2014/', 'CFMIP/amip_1980-2014/',...
                     'abrupt-4xCO2_150years/', ...
                     'amip-hist_2000-2014/', 'amip-hist_1980-2014/'}; % time series
-    level.model2 = modlist_all{p_1}; % model list
+    level.model2 = level.modlist_all{p_1}; % model list
     level.process3 = {'rawdata_regrid/', 'anomaly/', 'anomaly_trend/', 'cc/', 'kernelsCal/', ...
                     'radEffect/', 'radEffect_trend/', 'non_localCld/', 'vsTsEffect/', 'vsTsEffect_trend/'}; % next file folder names(use standVarPath Replace the current name)
     level.dvars4 = {'dhus', 'dalb', 'dta', 'dts'}; % note 5 kernels
