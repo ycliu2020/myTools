@@ -1,8 +1,8 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-09-08 10:52:19
-% LastEditors  : LYC
+% LastEditTime : 2021-04-06 19:32:26
+% LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipPlotParameters.m
 %
@@ -39,7 +39,7 @@ function [mlabels, areaNum] = cmipPlotParameters(sfcToa, landOrNot, figType)
                                 'Ta radEffect(near sfc)', 'Ta radEffect(without near sfc) ', 'Ts Effect on atmos'}; %4*3
             mlabels.componentNames = {'dRsfc_ts', 'drhs', 'drhsPlus', ...
                                     'dRsfc_ta', 'dRsfc_cloud', 'dRsfc_q', ...
-                                    'dRsfc_alb', 'dRsfc_mainEffect', 'dRsfc_residual', ...
+                                    'dRsfc_alb', 'dRsfc_nonTs', 'dRsfc_residual', ...
                                     'dRsfc_tas2', 'dRsfc_taOnly2', 'dRatm_tsAtom', 'dRsfc_ts'};
             mlabels.vars = strcat('trendyr_', mlabels.componentNames);
             mlabels.level = level_label{sfcToa};
