@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-04-02 15:45:06
+% LastEditTime : 2021-04-09 15:19:34
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipParameters.m
@@ -67,7 +67,7 @@ function [readme, Experiment, level, tLin, mPlev, vars] = cmipParameters(p_1)
     % initial time in amip-hist(1740 total): 1,561 of 1740(2000.03);1,321 of 1740(1980.01);
 
     %% time line (tLin)
-    tLin.time = {'2000-2014', '1980-2014', '2015-2099', '2015-2099', '2000-2014', '1980-2014', '1850-1999(standard)', '2000-2014', '1980-2014'}; % initial and last year
+    tLin.time = {'200001-201412', '198001-201412', '201501-209912', '201501-209912', '200001-201412', '198001-201412', '185001-199912(standard)', '200001-201412', '198001-201412'}; % initial and last year
     tLin.read = {'2000.01-2014.12', '1980.01-2014.12', '2015.01-2099.12', '2015.01-2099.12', '2000.01-2014.12', '1980.01-2014.12', '1850.01-1999.12(standard)', '2000.01-2014.12', '1980.01-2014.12'}; % txt information '2000.03-2014.02', '1979.03-2014.02'
     tLin.start = {'2000-01', '1980-01', '2015-01', '2015-01', '2000-01', '1980-01', '1850-01', '2000-01', '1980-01'}; % start year
     tLin.startYear = {2000, 1980, 2015, 2015, 2000, 1980, 1850, 2000, 1980}; % start year

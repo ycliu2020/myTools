@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-04-06 09:44:12
+% LastEditTime : 2021-04-10 15:37:15
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/Observe/obsParameters.m
@@ -18,10 +18,12 @@ function [readme, level, tLin, vars] = obsParameters(dataName)
     level.dataSet = {'ERAi/', 'ERA5/', 'CERES/', 'MODIS/','HadCRUT4/'}; % 不同的资料名称
 
     %% time line (tLin)
-    tLin.time = {'200003-201802', '200207-201706', '200003-201402','200001-201412','198001-201412'}; % initial and last year
-    tLin.start = {'2000-03', '2002-07','2000-03','2000-01','1980-01'}; % start year
-    tLin.inter = {18 * 12 15 * 12 14*12 15*12 35*12}; % total months
-    tLin.startMonth = {3 7 3 1 1}; % start months
+    tLin.time = {'200003-201802', '200207-201706', '200003-201402','200001-201412','198001-201412',...
+    '200003-202011'}; % initial and last year
+    tLin.start = {'2000-03', '2002-07','2000-03','2000-01','1980-01',...
+    '2000-03'}; % start year
+    tLin.inter = {18 * 12 15 * 12 14*12 15*12 35*12 20*12+9}; % total months
+    tLin.startMonth = {3 7 3 1 1 3}; % start months
 
     %% readme
     readme.readme = 'this is erai vars data all sky and clear sky drad ';

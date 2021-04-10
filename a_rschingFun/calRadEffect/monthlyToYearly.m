@@ -1,8 +1,8 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 21:14:59
-% LastEditTime : 2020-08-31 22:33:30
-% LastEditors  : LYC
+% LastEditTime : 2021-04-09 10:08:49
+% LastEditors  : Please set LastEditors
 % Description  : 
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/calRadEffect/monthlyToYearly.m
 %  
