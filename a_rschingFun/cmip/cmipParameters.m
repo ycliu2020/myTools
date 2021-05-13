@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-04-09 15:19:34
+% LastEditTime : 2021-05-11 16:08:02
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/cmipParameters.m
@@ -46,6 +46,25 @@ function [readme, Experiment, level, tLin, mPlev, vars] = cmipParameters(p_1)
         {'CESM2', 'BCC-CSM2-MR', 'MIROC6', 'MRI-ESM2-0'}, ...
             ... amip - hist_1980(4)
         {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-WACCM', 'GISS-E2-1-G', 'GISS-E2-1-H', 'GISS-E2-2-G', 'MIROC6', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON'}};
+    % MME
+    % model list
+    % MME2
+    level.modlist_MME{2, 1} = {'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2-FV2', 'CESM2', 'MPI-ESM1-2-HR', 'NorCPM1', 'SAM0-UNICON'};
+    level.modlist_MME{2, 2} = level.modlist_MME{2, 1};
+    level.modlist_MME{2, 4} = {'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'CanESM5', 'MPI-ESM1-2-HR', 'MPI-ESM1-2-LR'};
+
+    % MME3
+    level.modlist_MME{3, 1} = {'ACCESS-CM2', 'ACCESS-ESM1-5', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'GISS-E2-1-G', 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MIROC-ES2L', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'SAM0-UNICON', 'UKESM1-0-LL'};
+    level.modlist_MME{3, 2} = level.modlist_MME{3, 1};
+    level.modlist_MME{3, 4} = {'ACCESS-CM2', 'ACCESS-ESM1-5', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'CanESM5', 'CanESM5-CanOE', 'CESM2', 'CESM2-WACCM', 'FGOALS-g3', 'GISS-E2-1-G', 'MIROC6', 'MIROC-ES2L', 'MPI-ESM1-2-HR', 'MPI-ESM1-2-LR', 'MRI-ESM2-0', 'UKESM1-0-LL'};
+
+    % level.modlist_MME{4} = {'BCC-CSM2-MR'};
+    % path
+    level.path_MME = '/data1/liuyincheng/CMIP6-process/z_ensembleMean/';
+    level.readme_MME ={'MME list statement: ',
+        'MME1 list: The Intersection of AMIP and SSP370',
+        ['MME2 list: Respectively eliminate the inconsistent models of the model output and kernel calculation results in AMIP(', num2str(length(level.modlist_MME{2, 1})), ') and SSP370(', num2str(length(level.modlist_MME{2, 4})), ')'],
+        ['MME3 list: All possible model in AMIP(', num2str(length(level.modlist_MME{3, 1})), ') and SSP370(', num2str(length(level.modlist_MME{3, 4})), ')']};
     % picmtrol(25)
     % {'ACCESS-CM2', 'AWI-CM-1-1-MR', 'BCC-CSM2-MR', 'BCC-ESM1', 'CanESM5', 'CESM2', 'CESM2-FV2', 'CESM2-WACCM', 'CESM2-WACCM-FV2', 'FGOALS-g3', 'FIO-ESM-2-0', 'GISS-E2-1-G', 'GISS-E2-1-G-CC', 'GISS-E2-1-H', 'GISS-E2-2-G', 'HadGEM3-GC31 'GISS-E2-2-G', 'HadGEM3-GC31-LL', 'HadGEM3-GC31-MM', 'MIROC6', 'MPI-ESM-1-2-HAM', 'MPI-ESM1-2-HR', 'MRI-ESM2-0', 'NESM3', 'NorCPM1', 'NorESM1-F', 'SAM0-UNICON'}
     % old amip
@@ -53,12 +72,13 @@ function [readme, Experiment, level, tLin, mPlev, vars] = cmipParameters(p_1)
     Experiment = {'amip/CMIP', 'amip/CMIP', 'ssp245', 'ssp370', 'amip/CFMIP', 'amip/CFMIP', 'abrupt-4xCO2', 'amip-hist', 'amip-hist'};
 
     level.time1 = {'CMIP/amip_2000-2014/', 'CMIP/amip_1980-2014/', 'CMIP/ssp245_2015-2099/', 'CMIP/ssp370_2015-2099/', ...
-                    'CFMIP/amip_2000-2014/', 'CFMIP/amip_1980-2014/',...
+                    'CFMIP/amip_2000-2014/', 'CFMIP/amip_1980-2014/', ...
                     'abrupt-4xCO2_150years/', ...
                     'amip-hist_2000-2014/', 'amip-hist_1980-2014/'}; % time series
     level.model2 = level.modlist_all{p_1}; % model list
     level.process3 = {'rawdata_regrid/', 'anomaly/', 'anomaly_trend/', 'cc/', 'kernelsCal/', ...
-                    'radEffect/', 'radEffect_trend/', 'non_localCld/', 'vsTsEffect/', 'vsTsEffect_trend/'}; % next file folder names(use standVarPath Replace the current name)
+                    'radEffect/', 'radEffect_trend/', 'non_localCld/', 'vsTsEffect/', 'vsTsEffect_trend/', ...
+                    'FigData/'}; % next file folder names(use standVarPath Replace the current name)
     level.dvars4 = {'dhus', 'dalb', 'dta', 'dts'}; % note 5 kernels
 
     % time:2000.01-2014.12(interval:15*12);1980.01-2014.12(interval:35*12); 2015.01-2099.12(interval:85*12)

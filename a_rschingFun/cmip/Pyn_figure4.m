@@ -1,16 +1,16 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2021-03-11 22:40:37
+% LastEditTime : 2021-04-10 17:43:17
 % LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure4.m
 %
 %%---------------------------------------------------------
-function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(exmNum, mdlNum)
+function [lon_f, lat_f, cc_global, headLineTxt, figurePath, colorLab] = Pyn_figure4(exmNum, mdlNum)
     % load mask map
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
+    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat') % load word land mask
+    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat') % load word land mask
     load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')
     load('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
 
@@ -26,7 +26,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
     % exmPath
     exmPath = ['/data1/liuyincheng/CMIP6-process/', level.time1{exmNum}]; %/data1/liuyincheng/CMIP6-process/2000-2014/
 
-    outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
+    outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.3/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
     auto_mkdir(outputPath)
 
     % model path
@@ -44,17 +44,17 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
 
     if sum(strcmp(esmName, esm)) == 0
         disp(['the ', esm, ' ensemble of ', mdlName, ' didnt exist']);
-        figurePath='/no';
-        cc_global=[];
-        headLineTxt=[];
-        colorLab=[];
+        figurePath = '/no';
+        cc_global = [];
+        headLineTxt = [];
+        colorLab = [];
         return
     end
 
     specificNum = find(strcmp(esmName, 'r1i1p1f1') == 1);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % ensemble member
-    for esmNum = specificNum:specificNum%1:length(esmName)
+    for esmNum = specificNum:specificNum %1:length(esmName)
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% load and read
         esmPath = fullfile(mdlPath, esmName{esmNum, 1});
@@ -65,19 +65,19 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         kernelPath = fullfile(esmPath, level.process3{5}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/kernelsCal
         dradEffectPath = fullfile(esmPath, level.process3{6}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/radEffect/
         dnonLocalCldPath = fullfile(esmPath, level.process3{8}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/non_localCld/
-        load([dradEffectPath, 'global_vars.mat'])% lat_f lon_f time plev_k readme
+        load([dradEffectPath, 'global_vars.mat']) % lat_f lon_f time plev_k readme
         ntime = length(time.date);
 
         % cal surface temperature
-        load([varsPath, 'ts.mat'])% ts
-        load([dvarsPath, 'dts.mat'])%dts
+        load([varsPath, 'ts.mat']) % ts
+        load([dvarsPath, 'dts.mat']) %dts
         dts = autoRegrid3(lon_k, lat_k, time.date, dts, lon_f, lat_f, time.date);
         ts = autoRegrid3(lon_k, lat_k, time.date, ts, lon_f, lat_f, time.date);
 
         % cal rhs(RHeating)
-        load([dvarsPath, 'drlds.mat'])% surface_downwelling_longwave_flux_in_air
-        load([dvarsPath, 'drsds.mat'])% surface_downwelling_shortwave_flux_in_air
-        load([dvarsPath, 'drsus.mat'])% surface_upwelling_shortwave_flux_in_air
+        load([dvarsPath, 'drlds.mat']) % surface_downwelling_longwave_flux_in_air
+        load([dvarsPath, 'drsds.mat']) % surface_downwelling_shortwave_flux_in_air
+        load([dvarsPath, 'drsus.mat']) % surface_upwelling_shortwave_flux_in_air
         dR_swnet = drsds - drsus; % sfc net shortwave flux
         drhs = drlds + dR_swnet; % equilibrium equation's RHS, nearly equal to sfc upward rad
         drhs = autoRegrid3(lon_k, lat_k, time.date, drhs, lon_f, lat_f, time.date);
@@ -87,10 +87,10 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         load([dradEffectPath, 'dR_cloud_sfc.mat'])
 
         % TotalEffect
-        load([dradEffectPath, 'dradEffect_sfc_cld.mat'])% 'totalEffect', 'wvlwEffect', 'wvswEffect', 'tsEffect', 'albEffect', 'husEffect', 'taEffect', 'tasEffect2', 'taOnlyEffect2', 'totalEffect', 'mainEffect'
-        load([dradEffectPath, 'real_dradEffect.mat'])% 'dR_net_cld', 'l_rad', 's_rad', 'dR_clr', 'readme_realradEffect'
-        load([dradEffectPath, 'dR_residual_cld_sfc.mat'])% dR_residual_cld_sfc
-        load([dradEffectPath, 'dR_residual_cld_toa.mat'])% dR_residual_cld_toa
+        load([dradEffectPath, 'dradEffect_sfc_cld.mat']) % 'totalEffect', 'wvlwEffect', 'wvswEffect', 'tsEffect', 'albEffect', 'husEffect', 'taEffect', 'tasEffect2', 'taOnlyEffect2', 'totalEffect', 'mainEffect'
+        load([dradEffectPath, 'real_dradEffect.mat']) % 'dR_net_cld', 'l_rad', 's_rad', 'dR_clr', 'readme_realradEffect'
+        load([dradEffectPath, 'dR_residual_cld_sfc.mat']) % dR_residual_cld_sfc
+        load([dradEffectPath, 'dR_residual_cld_toa.mat']) % dR_residual_cld_toa
         dR_netSfc = squeeze(dR_net_cld(:, :, :, 1));
         dR_netTOA = squeeze(dR_net_cld(:, :, :, 2));
         varUsed = zeros(nlonf, nlatf, ntime, 2);
@@ -113,6 +113,19 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
 
         for varNum = 1:sizeVar
             varUsedYearly(:, :, :, varNum) = monthlyToYearly(varUsed(:, :, :, varNum));
+        end
+
+        % detrend
+        for varNum = 1:sizeVar
+
+            for latNum = 1:nlatf
+
+                for lonNum = 1:nlonf
+                    varUsedYearly(lonNum, latNum, :, varNum) = detrend(squeeze(squeeze(varUsedYearly(lonNum, latNum, :, varNum))));
+                end
+
+            end
+
         end
 
         % mask land.
@@ -166,9 +179,10 @@ function [lon_f,lat_f,cc_global,headLineTxt,figurePath,colorLab] = Pyn_figure4(e
         end
 
     end
-    headLineTxt = ['The correlation coefficient of LW_up and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(5:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum},', global mean CC= ', num2str(cc_weightMean{2})];
+
+    headLineTxt = ['The correlation coefficient of LW_up and dRHeating, Level:', toaSfc{2}, '~C~            Era: ', level.time1{exmNum}(5:end - 1), ', Model:', level.model2{mdlNum}, '~C~            Ensemble: ', esmName{esmNum}, ', global mean CC= ', num2str(cc_weightMean{2})];
     figName = [level.time1{exmNum}(5:end - 1), '_', level.model2{mdlNum}, '_', esmName{esmNum}];
     figurePath = [outputPath, '/', figName];
-    colorLab=mycolor(18);
+    colorLab = mycolor(18);
 
 end

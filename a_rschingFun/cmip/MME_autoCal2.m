@@ -6,7 +6,7 @@
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/MME_autoCal2.m
 %  
 %%---------------------------------------------------------
-function [] = MME_autoCal(varsOrig, MME_Models, exmNum)
+function [] = MME_autoCal2(varsOrig, MME_Models, exmNum)
     %MME_autoCal - Description
     %
     % Syntax: [] = MME_autoCal(input)
@@ -113,7 +113,7 @@ function [] = MME_autoCal(varsOrig, MME_Models, exmNum)
         eval([varsOrig.Name{varsNum}, '=squeeze(essembleMeanVar(:,:,', num2str(varsNum), '));'])
     end
 
-    outPutPath = [varsOrig.outputPath, level.time1{exmNum}, varsOrig.fileFolder];
+    outPutPath = fullfile(varsOrig.outputPath, level.time1{exmNum}, varsOrig.fileFolder);
     auto_mkdir(outPutPath);
     outPutFileName = [outPutPath, varsOrig.fileName];
 

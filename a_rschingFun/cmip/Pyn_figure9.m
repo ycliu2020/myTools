@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-11-17 09:38:25
-% LastEditTime : 2021-03-11 22:35:12
+% LastEditTime : 2021-05-11 14:26:59
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure9.m
@@ -20,20 +20,11 @@
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = Pyn_figure9(exmNum, mdlNum)
 
+    % global set
+    run '/home/liuyc/lib/tools/matlab/myTools/autoScript/preLoadVar.m'
+
     % load mask map
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
     [mlabels, areaNum] = cmipPlotParameters('sfc', 'land', 'radEffect'); % plot parameters
-    %% global set
-    % Latitude range
-    latRange = 90;
-    lon1 = [2.5 357.5]; lat1 = [-latRange + 1 latRange - 1]; % world area
-    lon_k = 0:2.5:357.5; nlonk = length(lon_k); % kernel lat lon
-    lat_k = 90:-2.5:-90; nlatk = length(lat_k);
-    lat_f = 88.75:-2.5:-88.75; nlatf = length(lat_f); % figure lat lon
-    lon_f = lon_k; nlonf = length(lon_f);
 
     [~, ~, level, ~, ~, ~] = cmipParameters(exmNum);
     % mPath.input:E:/data/CMIP6-process/2000-2014/

@@ -1,8 +1,8 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2020-07-26 16:15:39
-% LastEditors  : LYC
+% LastEditTime : 2021-05-04 17:16:16
+% LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/Observe/obsPlotParameters.m
 %
@@ -21,6 +21,11 @@ function [mlabels, areaNum] = obsPlotParameters(sfcToa, landOrNot, figType)
 
     mlabels.month = {'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'};
     mlabels.season = {'MAM', 'JJA', 'SON', 'DJF'};
+    mlabels.figOfSketch='/home/liuyc/Research/P02.Ts_change_research/figure/figOfSketch/';
+    mlabels.figOfPaper='/home/liuyc/Research/P02.Ts_change_research/figure/figOfPaper/';
+    mlabels.obsPath='/data2/liuyincheng/Observe-process/';
+
+
     unitRad = ' $\left( W\cdot m^{-2}/10a \right) $';
     unitTemp=' (K/10a)';
 

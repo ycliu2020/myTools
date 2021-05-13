@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-04-10 15:37:15
+% LastEditTime : 2021-05-09 15:03:17
 % LastEditors  : Please set LastEditors
 % Description  :
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/Observe/obsParameters.m
@@ -13,9 +13,13 @@ function [readme, level, tLin, vars] = obsParameters(dataName)
     % p_1 mean: 1.2000-03 to 2018-02(18*12) 2.200207-201706(15*12)
 
     %% level: 文件结构层次
-    level.standVarPath = {'rawdata_regrid/', 'anomaly/', 'anomaly_trend/', 'kernelsCal/', ...
-        'radEffect/', 'radEffect_trend/'};
+    level.standVarPath = {'rawdata_regrid/', 'anomaly/', 'anomaly_trend/', 'kernelsCal/', 'radEffect/',...
+    'radEffect_trend/','radEffect/nodp/','FigData/'};
     level.dataSet = {'ERAi/', 'ERA5/', 'CERES/', 'MODIS/','HadCRUT4/'}; % 不同的资料名称
+    level.obsPath='/data2/liuyincheng/Observe-process/';
+    level.dataName = dataName;
+    level.figOfSketch='/home/liuyc/Research/P02.Ts_change_research/figure/figOfSketch/';
+    level.figOfPaper='/home/liuyc/Research/P02.Ts_change_research/figure/figOfPaper/';
 
     %% time line (tLin)
     tLin.time = {'200003-201802', '200207-201706', '200003-201402','200001-201412','198001-201412',...

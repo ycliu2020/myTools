@@ -1,44 +1,32 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2020-12-07 21:23:42
+% LastEditTime : 2021-05-12 22:34:39
 % LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/Observe/Pyn_figure4_ERA5.m
 %
 %%---------------------------------------------------------
-function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5(exmNum)
+function [lon_f, lat_f, cc_global, headLineTxt, figPath, colorLab] = Pyn_figure4_ERA5(exmNum)
     % load mask map
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')
-    load('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
+    run '/home/liuyc/lib/tools/matlab/myTools/autoScript/preLoadVar.m'
+
     [mlabels, ~] = obsPlotParameters('sfc', 'land', 'ERA5-radEffect-ts');
     [readme, level, tLin, vars] = obsParameters('ERA5');
-    
-    latRange = 90; % Latitude range
-    lon1 = [2.5 357.5]; lat1 = [-latRange + 1 latRange - 1]; % world area
-    toaSfc = {'toa', 'sfc'};
-    lon_k = 0:2.5:357.5; nlonk = length(lon_k); % kernel lat lon
-    lat_k = 90:-2.5:-90; nlatk = length(lat_k);
-    lat_f = 88.75:-2.5:-88.75; nlatf = length(lat_f); % figure lat lon
-    lon_f = lon_k; nlonf = length(lon_f);
-
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     %read data
-    varsPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{1}); %rawdata
-    dvarsPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{2}); %anomaly
-    dvarsTrendPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{3}); %anomaly_trend
-    kernelCalPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{4}); % kernelCal
-    radEfectPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{5}); %radEffect
-    dradTrendPath = fullfile('/data1/liuyincheng/Observe-process', tLin.time{exmNum}, 'ERA5', level.standVarPath{6}); %/data1/liuyincheng/cmip6-proces/aimp_2000-2014/MRI-ESM2-0/ensemble/radEffect_trend/
-    outPutPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.0/');
+    ERAPath=fullfile('/data2/liuyincheng/Observe-process', tLin.time{exmNum},'ERA5')
+    varsPath = fullfile(ERAPath, level.standVarPath{1}); %rawdata
+    dvarsPath = fullfile(ERAPath, level.standVarPath{2}); %anomaly
+    dvarsTrendPath = fullfile(ERAPath, level.standVarPath{3}); %anomaly_trend
+    kernelCalPath = fullfile(ERAPath, level.standVarPath{4}); % kernelCal
+    radEffectPath = fullfile(ERAPath, level.standVarPath{5}); %radEffect
+    dradTrendPath = fullfile(ERAPath, level.standVarPath{6}); %/data1/liuyincheng/cmip6-proces/aimp_2000-2014/MRI-ESM2-0/ensemble/radEffect_trend/
+    outPutPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.3/Fig4_ts&Rheating_timeCC_globalDistribution');
     auto_mkdir(outPutPath)
-    load([dvarsTrendPath, 'global_vars.mat'])%% 'lon_f', 'lat_f', 'lon_k', 'lat_k', 'plev_k', 'time'
-    load([radEfectPath, 'dradEfect_sfc_cld.mat'])% load albEffect, husEffect, mainEffect, taEffect, taOnlyEffect, taOnlyEffect2, tasEffect, tasEffect2, totalEffect, tsEffect, wvlwEffect, wvswEffect
-    load([dvarsPath, 'drhs.mat'])% load drhs
-    nlonf = length(lon_f);
-    nlatf = length(lat_f);
+    load([dvarsTrendPath, 'global_vars.mat']) % % 'lon_f', 'lat_f', 'lon_k', 'lat_k', 'plev_k', 'time'
+    load([radEffectPath, 'dradEffect_sfc_cld.mat']) % load albEffect, husEffect, mainEffect, taEffect, taOnlyEffect, taOnlyEffect2, tasEffect, tasEffect2, totalEffect, tsEffect, wvlwEffect, wvswEffect
+    load([dvarsPath, 'drhs.mat']) % load drhs
     ntime = length(time);
     % regrid
     drhs = autoRegrid3(lon_k, lat_k, time, drhs, lon_f, lat_f, time);
@@ -46,7 +34,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5
     varUsed = zeros(nlonf, nlatf, ntime, 2);
     varUsed(:, :, :, 1) = -tsEffect;
     varUsed(:, :, :, 2) = drhs;
-    varNames = {'dR_{Ts}', 'dRHeating', 'ta RadEfect', 'ts RadEfect', 'q RadEfect', 'alb RadEfect'};
+    varNames = {'dR_{Ts}', 'dRHeating', 'ta RadEffect', 'ts RadEffect', 'q RadEffect', 'alb RadEffect'};
     yLabel = {'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2', 'W/m2'};
 
     sizeVarUsed = size(varUsed);
@@ -57,9 +45,22 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5
         varUsedYearly(:, :, :, varNum) = monthlyToYearly(varUsed(:, :, :, varNum));
     end
 
-    % mask only -60-60 land.
+    % mask
     for varNum = 1:sizeVar
         [varUsedYearly(:, :, :, varNum), ~, ~] = maskArea(squeeze(varUsedYearly(:, :, :, varNum)), lat_f, latRange, -latRange, 'world');
+    end
+
+    % detrend
+    for varNum = 1:sizeVar
+
+        for latNum = 1:nlatf
+
+            for lonNum = 1:nlonf
+                varUsedYearly(lonNum, latNum, :, varNum) = detrend(squeeze(squeeze(varUsedYearly(lonNum, latNum, :, varNum))));
+            end
+
+        end
+
     end
 
     % cal areaMeanLatWeight
@@ -74,19 +75,19 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5
 
     end
 
-
-    % cut to 2000.03-2014-02
-    timeStr=string(datestr(datenum(time),'yyyy-mm-dd'));
-    cutEnd=find(timeStr=='2014-02-01');
-    time=time(1:cutEnd);
-    ntime = length(time);
-    varUsedYearly_weightMean=varUsedYearly_weightMean(1:14,:);
+    % % cut to 2000.03-2014-02
+    % timeStr=string(datestr(datenum(time),'yyyy-mm-dd'));
+    % cutEnd=find(timeStr=='2014-02-01');
+    % time=time(1:cutEnd);
+    % ntime = length(time);
+    % varUsedYearly_weightMean=varUsedYearly_weightMean(1:14,:);
 
     ear5_time = time;
     clear time
     time.vec = datevec(ear5_time);
     timeYearly = unique(time.vec(:, 1));
     timeYearly = timeYearly(1:end - 1);
+    
     % cal cc of areaMeanLatWeight
     sizeWeightMean = size(varUsedYearly_weightMean);
     cc_weightMean = cell(1, sizeWeightMean(2));
@@ -97,6 +98,7 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5
         cc_weightMean{varNum} = roundn(cc0(1, 2), -2); %保留俩位小数
         pp_weightMean{varNum} = pp0(1, 2); % confidence interval
     end
+
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % cal cc of every point of map
     cc_global = zeros(nlonf, nlatf, sizeVar);
@@ -117,9 +119,9 @@ function [lon_f,lat_f,cc_global,headLineTxt,figPath,colorLab] = Pyn_figure4_ERA5
 
     end
 
-    headLineTxt=['The correlation coefficient of LW_up and dRHeating~C~            Data: ', mlabels.dataName{1}, ', Level: ', mlabels.level, ', Era: ', tLin.time{3},'~C~            global mean CC= ', num2str(cc_weightMean{2})];
-    figName = ['Fig4_',mlabels.dataName{1}, '_', tLin.time{3}, '_', mlabels.area, '_', mlabels.level, '_globalDistribution'];
+    headLineTxt = ['The correlation coefficient of LW_up and dRHeating~C~            Data: ', mlabels.dataName{1}, ', Level: ', mlabels.level, ', Era: ', tLin.time{exmNum}, '~C~            global mean CC= ', num2str(cc_weightMean{2})];
+    figName = ['Fig4_', mlabels.dataName{1}, '_', tLin.time{exmNum}, '_', mlabels.area, '_', mlabels.level, '_globalDistribution'];
     figPath = [outPutPath, '/', figName];
-    colorLab=mycolor(18);
+    colorLab = mycolor(18);
 
 end

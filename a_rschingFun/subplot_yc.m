@@ -1,8 +1,8 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-06-09 15:50:13
-% LastEditTime : 2021-02-09 01:04:09
-% LastEditors  : LYC
+% LastEditTime : 2021-04-13 14:36:57
+% LastEditors  : Please set LastEditors
 % Description  : flexible plot sub figures
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/subplot_yc.m
 %
@@ -13,10 +13,16 @@ function [h] = subplot_yc(nrow, ncol, irow, icol)
     %
 
     widthPlot = 1 ./ ncol .* .7; %子图长度
+    % if ncol<=2
+    %     widthPlot = 1 ./ ncol .* .85;
+    % end
     widthInter = (1 - widthPlot .* ncol) ./ (ncol + 2); % 子图左右之间的间距
     widthMargin = widthInter .* icol + widthPlot .* (icol - 1) + 0.045; % 子图左边距
 
     heightPlot = 1 ./ (nrow + 1) .* 0.8; %子图宽度
+    % if nrow<=2
+    %     heightPlot = 1 ./ (nrow + 1);
+    % end
     heightFirstRow = (1 - heightPlot .* nrow) ./ (nrow) + 0.01; % 第一行子图的上边距(放标题或者调整整幅图的位置用)
     heightInter = (1 - heightPlot .* nrow) ./ (nrow + 3); % 子图上下之间的间距
     heightMargin = 1 - heightFirstRow - heightInter .* (irow - 1) - heightPlot .* irow; % 子图上边距
