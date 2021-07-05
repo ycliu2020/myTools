@@ -1,7 +1,7 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-31 17:00:15
-% LastEditTime : 2021-05-12 22:06:29
+% LastEditTime : 2021-06-24 05:26:03
 % LastEditors  : Please set LastEditors
 % Description  : 同时画时间序列和相关性分布图
 % FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/a_rschingFun/cmip/Pyn_figure4_MME.m
@@ -15,13 +15,13 @@ function [lon_f, lat_f, cc_global, headLineTxt, figurePath, colorLab] = Pyn_figu
     % exmPath
     exmPath = ['/data1/liuyincheng/CMIP6-process/', level.time1{exmNum}]; %/data1/liuyincheng/CMIP6-process/2000-2014/
 
-    outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/proj3_PaperFig/v0.3/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
+    outputPath = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/figOfPaper/v0.3/Fig4_ts&Rheating_timeCC_globalDistribution', level.time1{exmNum}); %['dRTs_', lower(mlabels.level)];
     auto_mkdir(outputPath)
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% load and read
     % MMEPath
-    MMEPath = fullfile(level.path_MME, MMEType, level.time1{exmNum}); %/data1/liuyincheng/CMIP6-process/2000-2014/
+    MMEPath = fullfile(level.path_MME, MMECode, level.time1{exmNum}); %/data1/liuyincheng/CMIP6-process/2000-2014/
     % data path
     dvarsPath = fullfile(MMEPath, level.process3{2}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/anomaly
     dradEffectPath = fullfile(MMEPath, level.process3{6}); %/data1/liuyincheng/CMIP6-process/2000-2014/MRI-ESM2-0/radEffect/
@@ -42,11 +42,14 @@ function [lon_f, lat_f, cc_global, headLineTxt, figurePath, colorLab] = Pyn_figu
 
     sizeVarUsed = size(varUsed);
     sizeLon = sizeVarUsed(1); sizeLat = sizeVarUsed(2); sizeTime = sizeVarUsed(3); sizeVar = sizeVarUsed(4);
-    varUsedYearly = zeros(sizeLon, sizeLat, sizeTime / 12, sizeVar);
+    varUsedYearly = varUsed;
+    
+    % transfor monthly data to the yearly data
+    % varUsedYearly = zeros(sizeLon, sizeLat, sizeTime / 12, sizeVar);
 
-    for varNum = 1:sizeVar
-        varUsedYearly(:, :, :, varNum) = monthlyToYearly(varUsed(:, :, :, varNum));
-    end
+    % for varNum = 1:sizeVar
+    %     varUsedYearly(:, :, :, varNum) = monthlyToYearly(varUsed(:, :, :, varNum));
+    % end
 
     % % detrend
     % for varNum = 1:sizeVar

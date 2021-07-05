@@ -31,10 +31,8 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = ssp370_rhsTsTren
     trendyr = zeros(nlonf, nlatf, 4);
     trendyr(:, :, 1) = -trendyr_dRsfc_ts;
     trendyr(:, :, 2) = trendyr_drhs;
-    trendyr(:, :, 3) = trendyr_drhsKern;
-    trendyr(:, :, 4) = trendyr(:, :, 2) - trendyr(:, :, 1); % res
-    trendyr(:, :, 5) = trendyr_dhFlux; % -rh-sh
-    trendyr(:, :, 6) = trendyr(:, :, 4)+trendyr(:, :, 5); % -rh-sh
+    trendyr(:, :, 3) = trendyr_dhFlux; % -THF
+    trendyr(:, :, 4) = trendyr(:, :, 1) - trendyr(:, :, 2) - trendyr(:, :, 3); % Res
 
     trendyr = trendyr * 365 * 10;
 
@@ -43,10 +41,11 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = ssp370_rhsTsTren
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % plot Part
-    f_row = 2; f_col = 3; % 设置画图的行列
+    f_row = 2; f_col = 2; % 设置画图的行列
 
     figTitle.subTitle = cell(1, f_row*f_col);
-    figTitle.subTitle = {['-K~B~Ts~N~', '~F20~G~F19~[', '~F21~T~B~s~N~'], ['dR~B~heating~N~', ', r=', num2str(yr_cc{2})], ['dR~B~heating, Kern~N~', ', r=', num2str(yr_cc{3})], ['(b)-(a)'],['LH+SH'],['(d)+(e)']};   
+    % figTitle.subTitle = {['-K~B~Ts~N~', '~F20~G~F19~[', '~F21~T~B~s~N~'], ['dR~B~heating~N~', ', r=', num2str(yr_cc{2})], ['dR~B~heating, Kern~N~', ', r=', num2str(yr_cc{3})], ['(b)-(a)'],['LH+SH'],['(d)+(e)']};   
+    figTitle.subTitle = {['-K~B~Ts~N~', '~F20~G~F19~[', '~F21~T~B~s~N~'], ['~F19~[', '~F21~RH', ', r=', num2str(yr_cc{2})], ['-~F19~[', '~F21~THF'], ['Res']};   
     figTitle.headLineTxt = ['Level:', mlabels.level, ', Data: ', level.time1{exmNum}(6:end - 11), ', Trend(year mean)~C~           MME Type:', MMEType, ', Unit: W/m2/10a'];
     figTitle.seqNum=cell(1, f_row*f_col);
     for rowNum = 1:f_row*f_col
@@ -54,13 +53,13 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = ssp370_rhsTsTren
     end
     % color bar
     colorLab1 = mycolor('freshStyle_16');
-    if plotType==4
+    if plotType == 6
         colorLab = colorLab1(end - 9:end, :);
         colorLab(1,:) = colorLab(2,:);
         colorLab(2,:) = [1,1,1];
         colorLab(4:end+1,:)= colorLab(3:end,:);
         colorLab(3,:) = [1,1,1];
-    elseif plotType==6
+    elseif plotType == 4
         colorLab = colorLab1(end - 10:end, :);
         colorLab(1,:) = colorLab1(end - 11,:);
         % colorLab(2,:) = [1,1,1];
@@ -74,7 +73,7 @@ function [lon_f, lat_f, trendyr, figTitle, figPath, colorLab] = ssp370_rhsTsTren
     %% save Part
     mPath.outPut = fullfile('/home/liuyc/Research/P02.Ts_change_research/figure/figOfSketch/SSP370_longTimeTrend/RheatingVsLW'); %['dRTs_', lower(mlabels.level)],
     auto_mkdir(mPath.outPut)
-    figName = [MMEType, '_Glb_rhsVsLW_', level.time1{exmNum}(6:end - 11),'_',num2str(plotType),'Plot'];
+    figName = [MMEType, '_Glb_rhsVsLW_', level.time1{exmNum}(6:end - 11),'_',num2str(plotType),'Plot1'];
     figPath = [mPath.outPut, '/', figName];
 
 

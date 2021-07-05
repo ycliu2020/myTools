@@ -1,10 +1,10 @@
 %%---------------------------------------------------------
 % Author       : LYC
 % Date         : 2020-08-03 15:17:30
-% LastEditTime : 2020-08-03 21:26:29
-% LastEditors  : LYC
+% LastEditTime : 2021-06-07 04:41:12
+% LastEditors  : Please set LastEditors
 % Description  : 
-% FilePath     : /code/tempCode/plotMap2D.m
+% FilePath     : /code/home/liuyc/lib/tools/matlab/myTools/plotTools/plotMap2D.m
 %  
 %%---------------------------------------------------------
 % load mask map
@@ -17,11 +17,11 @@ function [] = plotMap2D(lon,lat,varInput)
 % @return {type} [name] description.
 % @see dependencies
 %
+load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat') % load word land mask
+load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat') % load word land mask
+load('/home/liuyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')
+load('/home/liuyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
 
-load('/home/lyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_cp144.mat')% load word land mask
-load('/home/lyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/mask/mask_ce72.mat')% load word land mask
-load('/home/lyc/lib/tools/matlab/plot/myMap/02.world_map/mat_file/correct_worldmap.mat')
-load('/home/lyc/lib/tools/matlab/plot/myMap/01.china_map/mat_file/mask14472.mat')
 
 p_3 = 80;
 lon1 = [2.5 357.5]; lat1 = [-p_3 + 1 p_3 - 1]; % world area
@@ -33,7 +33,13 @@ h = figure('Position', [ss(4) / 2 ss(3) / 35 ss(3) * 3/9.5 ss(4) * 4/5]); %
 set(h, 'Color', [1 1 1]);
 
 m_proj('Mercator', 'lon', lon1, 'lat', lat1); %Mercator,Equidistant cylindrical,lambert,Miller Cylindrical
-m_pcolor(lon, lat, varInput');
+
+% Create a grid, offsetting by half a grid point to account for the flat pcolor
+interLon=abs(lon(2)-lon(1));
+interLat=abs(lat(2)-lat(1));
+[lon_pclr,lat_pclr]=meshgrid(lon-interLon/2,lat+interLat/2);
+m_pcolor(lon_pclr, lat_pclr, varInput');
+
 colormap(mycolor(18)); %mycolor(100)is soden color colormap(flipud(mycolor(13)));%colormap(jet(4))%
 col_SeriesNum=10;
 [colorbar_Series] = findSuit_colorInt(varInput, col_SeriesNum);
